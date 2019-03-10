@@ -7,7 +7,7 @@ Az alkalmazás egy hagyományos projekt kezelőt valósít meg. Alapvető funkci
  
 ## Projekt
 
-### Attribútumok:
+### Attribútumok
  - Név
  - Leírás
  - Határidő
@@ -21,6 +21,11 @@ Az alkalmazás egy hagyományos projekt kezelőt valósít meg. Alapvető funkci
  - Határidő
  - Felelős
  - Projekt
+ 
+ #### Kommentelés
+ A feladatoknak és a projekteknek is lesz egy részletes nézete, ahol az adott feladat (projekt) leírását és egyéb részletes adatait 
+ lehet majd látni, egy áttekinthető felületen. Itt lehetősége nyílik a felhasználónak kommentet fűzni az adott feladathoz. Erről az
+ adott feladathoz korábban megjegyzést fűző felhassználók kapnak egy email értesítést. 
  
 ## Komment
 
@@ -38,13 +43,13 @@ Az alkalmazás egy hagyományos projekt kezelőt valósít meg. Alapvető funkci
   - Jogkör
   - Jelszó
   
- ## Technikai leírás
+## Technikai leírás
  
- Az alkalmazás két fő részből fog állni. Egy Spring Boot alapokra épülő backendből, ami egy REST API-n kereszül fog kommunikálni az
- Angular-ra épülő frontend-el. Az autentikáció JWT-vel fog megtörténni. Implementálásra kerül egy basic ACL is, aminek köszönhetően
- Jogkörökre osztva lehet szabályozni a hozzáférést az alkalmazás különböző funkciójihoz. Az adatokaz Mysql adatbázisban fogja
- tárolni az alkalmazás. A projekthez gradle-t és npm-et fogunk használni a dependenciák megfelelő kezelése érdekében.
- ### Tesztelés
- A tesztelést korlátozzuk a Unit tesztek szintjére (Integrációs teszteléstől eltekintünk). A unit teszteket JUnit segítségével írjuk
- backend oldalon míg Jasmine test framework-el frontend oldalon.
+Az alkalmazás két fő részből fog állni. Egy Spring Boot alapokra épülő backendből, ami egy REST API-n kereszül fog kommunikálni az
+Angular-ra épülő frontend-el. Az autentikáció JWT-vel fog megtörténni. Implementálásra kerül egy basic ACL is, aminek köszönhetően
+Jogkörökre osztva lehet szabályozni a hozzáférést az alkalmazás különböző funkciójihoz. Az adatokaz Mysql adatbázisban fogja
+tárolni az alkalmazás. A projekthez gradle-t és npm-et fogunk használni a dependenciák megfelelő kezelése érdekében.
+### Tesztelés
+A tesztelést korlátozzuk a Unit tesztek szintjére (Integrációs teszteléstől eltekintünk). A unit teszteket JUnit segítségével írjuk
+backend oldalon míg Jasmine test framework-el frontend oldalon.
  
