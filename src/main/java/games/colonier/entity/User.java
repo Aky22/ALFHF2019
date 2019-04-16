@@ -1,7 +1,12 @@
 package games.colonier.entity;
 
-import java.util.ArrayList;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class User {
 
     public enum Roles {
@@ -9,6 +14,8 @@ public class User {
         BASIC
     }
 
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
     private String username;
@@ -17,11 +24,13 @@ public class User {
 
     private String password;
 
-    private ArrayList<Roles> role;
+    private Roles role;
 
     public long getId() {
         return id;
     }
+
+    public void setId(long id) { this.id = id; }
 
     public String getUsername() {
         return username;
@@ -47,11 +56,11 @@ public class User {
         this.password = password;
     }
 
-    public ArrayList<Roles> getRole() {
+    public Roles getRole() {
         return role;
     }
 
-    public void setRole(ArrayList<Roles> role) {
+    public void setRole(Roles role) {
         this.role = role;
     }
 }
