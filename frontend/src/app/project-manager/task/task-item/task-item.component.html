@@ -1,0 +1,21 @@
+<div *ngIf="task !== undefined && accountableUser !== undefined">
+  <div class="ui-grid ui-grid-responsive">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-6">Name</div>
+      <div class="ui-grid-col-6">{{task.name}}</div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-6">Accountable</div>
+      <div class="ui-grid-col-6">{{accountableUser.username}}</div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-6">Deadline</div>
+      <div class="ui-grid-col-6">{{task.deadline}}</div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-12">
+        <button type="button" pButton icon="pi pi-search" (click)="onSelect()"></button>
+      </div>
+    </div>
+  </div>
+</div>
