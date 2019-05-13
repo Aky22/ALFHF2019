@@ -1,7 +1,7 @@
 export interface CommentInterface {
   id?: number;
-  userId: number;
+  userId?: number;
   message: string;
-  parentId: number;
-  taskId: number;
+  parentId?: number;
+  taskId?: number;
 }

@@ -1,3 +1,116 @@
-<p>
-  project-details works!
-</p>
+<div *ngIf="project !== undefined && tasks !== undefined && contributors !== undefined && mode !== undefined">
+  <div class="ui-g">
+    <div class="ui-g-6">
+      <h4>Project</h4>
+      <div class="ui-g-12 ui-fluid">
+        <label for="name">Project name</label>
+        <input id="name" type="text" pInputText [(ngModel)]="project.name" [disabled]="!isEditable()"/>
+      </div>
+      <div class="ui-fluid ui-g-12">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          [rows]="5"
+          pInputTextarea
+          [disabled]="!isEditable()"
+          style="resize: none"
+          [(ngModel)]="project.description">
+        </textarea>
+      </div>
+      <div class="ui-g-12 ui-fluid">
+        <label for="deadline"></label>
+        <p-calendar id="deadline" [showIcon]="true" [(ngModel)]="project.deadline" [disabled]="!isEditable()"></p-calendar>
+      </div>
+      <div class="ui-fluid ui-g-12">
+        <p-listbox
+          [disabled]="!isEditable()"
+          [options]="users"
+          [(ngModel)] = "contributors"
+          multiple="multiple"
+          checkbox="checkbox"
+          filter="filter"
+          optionLabel="username"
+          [listStyle]="{'max-height':'250px'}">
+          <p-header>
+            Contributors
+          </p-header>
+        </p-listbox>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-6">
+          <p-button  label="Cancel" (onClick)="onBack()"></p-button>
+        </div>
+        <div class="ui-g-6" style="text-align: right">
+          <p-button *ngIf="isEditable()" label="Save" (onClick)="onSave()"></p-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-g-6">
+      <h4>Tasks</h4>
+      <div class="ui-g-12 ui-g" *ngIf="tasks !== undefined">
+        <div class="ui-g-12">
+          <p-button label="New task" (onClick)="onNewTask()" [disabled]="!isEditable()"></p-button>
+        </div>
+
+
+        <div class="ui-g-12">
+          <p-scrollPanel [style]="{width: '100%', height: '400px'}">
+            <div class=">ui-g-12" *ngFor="let task of tasks" style="padding-bottom: 5px">
+              <app-task-item
+                [task]="task"
+                [mode]="mode"
+                (selectedDelete)="onTaskDelete($event)"
+                (selectedDetails)="onTaskDetails($event)"
+                (selectedEdit)="onTaskEdit($event)">
+              </app-task-item>
+            </div>
+          </p-scrollPanel>
+        </div>
+
+      </div>
+      <div *ngIf="selectedTask !== undefined" >
+        <p-dialog header="Details" [(visible)]="display.details" >
+          <app-task-details
+            [task]="selectedTask"
+            [projectId]="projectId"
+            [mode]="'Details'"
+            (cancel)="onTaskCancel()"
+            (saveTask)="onTaskSave($event)"></app-task-details>
+        </p-dialog>
+      </div>
+      <div *ngIf="selectedTask !== undefined">
+        <p-dialog header="Edit" [(visible)]="display.edit" >
+          <app-task-details
+            [task]="selectedTask"
+            [projectId]="projectId"
+            [mode]="'Edit'"
+            (cancel)="onTaskCancel()"
+            (saveTask)="onTaskSave($event)"></app-task-details>
+        </p-dialog>
+      </div>
+      <div>
+        <p-dialog header="New task" [(visible)]="display.new" [contentStyle]="{'overflow':'visible'}">
+          <app-task-details
+            [task]="selectedTask"
+            [projectId]="projectId"
+            [mode]="'Create'"
+            (cancel)="onTaskCancel()"
+            (saveTask)="onTaskSave($event)"></app-task-details>
+        </p-dialog>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

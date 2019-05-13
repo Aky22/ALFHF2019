@@ -11,21 +11,24 @@ import { ProjectManagerComponent } from './project-manager/project-manager.compo
 import { ProjectListComponent } from './project-manager/project-list/project-list.component';
 import { ProjectDetailsComponent } from './project-manager/project-details/project-details.component';
 import { ProjectCreateComponent } from './project-manager/project-create/project-create.component';
-import { ProjectEditComponent } from './project-manager/project-edit/project-edit.component';
 import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   ButtonModule,
-  CodeHighlighterModule,
+  CodeHighlighterModule, DialogModule,
   InputTextareaModule,
   InputTextModule,
-  ListboxModule, MessageModule,
-  PanelModule,
+  ListboxModule, MenubarModule, MessageModule,
+  PanelModule, ScrollPanelModule, SplitButtonModule,
   TabViewModule
 } from 'primeng/primeng';
 import {ToastModule} from 'primeng/toast';
 import { TaskItemComponent } from './project-manager/task/task-item/task-item.component';
 import { TaskDetailsComponent } from './project-manager/task/task-details/task-details.component';
+import {TableModule} from 'primeng/table';
+import { HeaderComponent } from './header/header.component';
+import { CommentItemComponent } from './project-manager/task/comment/comment-item/comment-item.component';
+import { NewCommentComponent } from './project-manager/task/comment/new-comment/new-comment.component';
 
 
 const appRouts: Routes = [
@@ -35,8 +38,7 @@ const appRouts: Routes = [
       children: [
         {path: 'list', component: ProjectListComponent},
         {path: 'create', component: ProjectCreateComponent},
-        {path: 'details/:id', component: ProjectDetailsComponent},
-        {path: 'edit/:id', component: ProjectEditComponent}
+        {path: 'details/:mode/:id', component: ProjectDetailsComponent}
       ]}
 ];
 
@@ -51,9 +53,12 @@ const appRouts: Routes = [
     ProjectListComponent,
     ProjectDetailsComponent,
     ProjectCreateComponent,
-    ProjectEditComponent,
+    ProjectDetailsComponent,
     TaskItemComponent,
-    TaskDetailsComponent
+    TaskDetailsComponent,
+    HeaderComponent,
+    CommentItemComponent,
+    NewCommentComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +75,13 @@ const appRouts: Routes = [
     InputTextareaModule,
     ToastModule,
     PanelModule,
-    MessageModule
+    MessageModule,
+    TableModule,
+    SplitButtonModule,
+    DialogModule,
+    MenubarModule,
+    InputTextModule,
+    ScrollPanelModule
   ],
   providers: [],
   bootstrap: [AppComponent]

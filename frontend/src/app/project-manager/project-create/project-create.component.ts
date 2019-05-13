@@ -4,6 +4,7 @@ import {UsersService} from '../../shared/services/users.service';
 import {SimpleUserInterface} from '../../shared/model/interfaces/user.interface';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProjectService} from '../../shared/services/project.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-project-create',
@@ -12,13 +13,14 @@ import {ProjectService} from '../../shared/services/project.service';
 })
 export class ProjectCreateComponent implements OnInit {
   project: ProjectInterface;
-  simpleUsers: SimpleUserInterface[];
-  selectedSimpleUsers: SimpleUserInterface[];
+  simpleUsers: SimpleUserInterface[] = [];
+  selectedSimpleUsers: SimpleUserInterface[] = [];
   projectForm: FormGroup;
 
   constructor(private usersService: UsersService,
               private fb: FormBuilder,
-              private projectService: ProjectService) { }
+              private projectService: ProjectService,
+              private router: Router) { }
 
   ngOnInit() {
     this.simpleUsers = [];
@@ -45,6 +47,13 @@ export class ProjectCreateComponent implements OnInit {
     this.project.contributorIds = this.projectForm.value.contributorIds;
     this.projectService.saveProject(this.project);
     console.log(this.projectForm);
+    this.projectForm.reset();
+    this.router.navigate(['/project-manager/list']);
+
+  }
+
+  onBack(){
+    this.router.navigate(['/project-manager/list']);
   }
 
 }

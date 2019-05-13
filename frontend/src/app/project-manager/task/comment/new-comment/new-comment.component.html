@@ -1,0 +1,8 @@
+<div *ngIf="comment !== undefined" class="ui-g ui-fluid">
+  <div class="ui-g-12 ui-fluid">
+    <textarea [rows]="5" pInputTextarea (resize)="false" [(ngModel)]="comment.message" style="resize: none"></textarea>
+  </div>
+  <div class="ui-g-12">
+    <p-button label="Send" (onClick)="onSend()"></p-button>
+  </div>
+</div>
