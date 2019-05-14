@@ -1,10 +1,8 @@
 package games.colonier.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -25,6 +23,9 @@ public class User {
     private String password;
 
     private Roles role;
+
+    @ManyToMany
+    private Set<Project> projects;
 
     public long getId() {
         return id;
@@ -62,5 +63,13 @@ public class User {
 
     public void setRole(Roles role) {
         this.role = role;
+    }
+
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
     }
 }
