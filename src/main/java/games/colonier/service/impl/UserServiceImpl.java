@@ -38,7 +38,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
         return authorities;
-        //return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
 
     public List<User> findAll() {
@@ -71,4 +70,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         newUser.setRole(user.getRole());
         return userDao.save(newUser);
     }
+
+
 }

@@ -1,7 +1,10 @@
 package games.colonier.controller;
 
+import games.colonier.entity.User;
+import games.colonier.entity.UserDto;
 import games.colonier.model.AuthToken;
 import games.colonier.model.LoginUser;
+import games.colonier.model.RegisterUser;
 import games.colonier.security.TokenProvider;
 import games.colonier.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +21,7 @@ import static games.colonier.model.Constants.TOKEN_PREFIX;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/token")
+@RequestMapping("/auth")
 public class AuthenticationController {
 
     @Autowired
@@ -30,7 +33,7 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> register(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
         final Authentication authentication = authenticationManager.authenticate(
@@ -42,6 +45,19 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = jwtTokenUtil.generateToken(authentication);
         return ResponseEntity.ok(new AuthToken(token));
+    }
+
+    @RequestMapping(value="/signup", method = RequestMethod.POST)
+    public ResponseEntity<?> sign_up(@RequestBody RegisterUser registerUser){
+        UserDto userDto = new UserDto();
+        userDto.setUsername(registerUser.getUsername());
+        userDto.setPassword(registerUser.getPassword());
+        userDto.setEmail(registerUser.getEmail());
+        userDto.setRole(User.Roles.BASIC);
+        userService.save(userDto);
+
+        return ResponseEntity.status(201).body("Created");
+
     }
 
 }
