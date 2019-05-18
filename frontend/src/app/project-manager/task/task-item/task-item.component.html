@@ -1,0 +1,30 @@
+<div *ngIf="task !== undefined && accountableUser !== undefined" >
+  <p-panel>
+    <p-header>
+      <div class="ui-helper-clearfix">
+        <span
+          class="ui-panel-title"
+          style="font-size:16px;display:inline-block;margin-top:2px">
+          {{task.name}}
+        </span>
+        <p-splitButton
+          [style]="{'float':'right'}"
+          label="Details"
+          icon="pi pi-file"
+          (onClick)="onSelectDetails()"
+          [model]="items"></p-splitButton>
+      </div>
+    </p-header>
+    <div class="ui-grid ui-grid-responsive">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-6">Accountable</div>
+      <div class="ui-grid-col-6">{{accountableUser.username}}</div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-6">Deadline</div>
+      <div class="ui-grid-col-6">{{task.deadline  | date: 'yyyy/MM/dd'}}</div>
+    </div>
+  </div>
+  </p-panel>
+
+</div>

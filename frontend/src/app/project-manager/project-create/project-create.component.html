@@ -1,0 +1,78 @@
+<form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+  <p-panel header="New Project">
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Project name *:
+        </div>
+        <div class="ui-grid-col-6">
+          <input pInputText type="text" formControlName="name" placeholder="Required"/>
+        </div>
+        <div class="ui-grid-col-4">
+          <p-message severity="error" text="Project name is required" *ngIf="!projectForm.controls['name'].valid && projectForm.controls['name'].touched"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Description:
+        </div>
+        <div class="ui-grid-col-6">
+          <textarea
+            pInputTextarea
+            type="text"
+            formControlName="description"
+            [rows]="5"
+            [cols]="30"
+            [autoResize]="'autoResize'"></textarea>
+        </div>
+        <div class="ui-grid-col-4">
+          <p-message severity="error" text="Project description is required" *ngIf="!projectForm.controls['description'].valid && projectForm.controls['description'].touched"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Deadline *:
+        </div>
+        <div class="ui-grid-col-6">
+          <p-calendar [showIcon]="true" [formControlName]="'deadline'"></p-calendar>
+        </div>
+        <div class="ui-grid-col-4">
+          <p-message severity="error" text="Deadline is required" *ngIf="!projectForm.controls['deadline'].valid && projectForm.controls['deadline'].touched"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Contributors *:
+        </div>
+        <div class="ui-grid-col-6">
+          <p-listbox
+              [options]="simpleUsers"
+              [formControlName]="'contributorIds'"
+              multiple="multiple"
+              checkbox="checkbox"
+              filter="filter"
+              optionLabel="username"
+              [listStyle]="{'max-height':'250px'}">
+              <p-header>
+                Contributors
+              </p-header>
+            </p-listbox>
+        </div>
+        <div class="ui-grid-col-4">
+          <p-message severity="error" text="At least one contributor is required" *ngIf="!projectForm.controls['contributorIds'].valid && projectForm.controls['contributorIds'].touched"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2"></div>
+        <div class="ui-grid-col-2">
+          <button pButton type="button" label="Cancel" (click)="onBack()"></button>
+        </div>
+        <div class="ui-grid-col-4">
+          <button pButton type="submit" label="Submit" [disabled]="!projectForm.valid"></button>
+        </div>
+        <div class="ui-grid-col-4"></div>
+      </div>
+    </div>
+  </p-panel>
+</form>
+

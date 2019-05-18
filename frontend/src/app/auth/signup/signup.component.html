@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-xs-10 col-sm-8 col-md-6 col-sm-offset-1 col-md-offset-3">
+    <form (ngSubmit)="onSignup()" #f="ngForm" [appMustMatch]="['password', 'password1']">
+      <div class="form-group">
+        <label for="email">Mail</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          ngModel
+          class="form-control"
+          email
+          required
+          #email="ngModel">
+      </div>
+      <span class="help-block" *ngIf="!email.valid && email.touched">This email address is invalid!</span>
+      <div class="form-group">
+        <label for="fullName">Full name</label>
+        <input
+          type="text"
+          id="fullName"
+          name="fullName"
+          ngModel
+          class="form-control"
+          required
+          #fullName="ngModel">
+      </div>
+      <span class="help-block" *ngIf="!fullName.valid && fullName.touched">Enter your name!</span>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          ngModel
+          class="form-control"
+          required
+          minlength="6"
+          #password="ngModel">
+      </div>
+      <span class="help-block" *ngIf="!password.valid && password.touched">The password shall be at least 6 character long!</span>
+      <div class="form-group">
+        <label for="password1">Confirm password</label>
+        <input
+          type="password"
+          id="password1"
+          name="password1"
+          ngModel
+          class="form-control"
+          required
+          minlength="6"
+          #password1="ngModel">
+      </div>
+      <span class="help-block" *ngIf="!password1.valid && password1.touched">The passwords do not match!</span>
+      <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Register</button>
+    </form>
+  </div>
+</div>
+
+
+

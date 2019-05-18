@@ -1,0 +1,11 @@
+<div style="padding-bottom: 10px">
+  <p-panel *ngIf="comment !== undefined && user !== undefined" class="ui-fluid">
+    <p-header>
+      {{user.username}}
+    </p-header>
+    <p style="word-break: break-word">
+      {{comment.message}}
+    </p>
+  </p-panel>
+</div>
+

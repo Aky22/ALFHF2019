@@ -1,0 +1,33 @@
+<div>
+  <p-table [columns]="cols" [value]="projects">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{col.header}}
+        </th>
+        <th style="width:11em">
+          <button pButton type="button" label="New project" (click)="onNewProject()"></button>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td>
+          {{rowData.name}}
+        </td>
+        <td>
+          {{rowData.deadline | date: 'yyyy/MM/dd'}}
+        </td>
+        <td>
+          <p-splitButton
+            label="Details"
+            icon="pi pi-file"
+            (onClick)="onSelectView(rowData)"
+            [model]="getItems(rowData)">
+          </p-splitButton>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
