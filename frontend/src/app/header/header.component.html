@@ -1,5 +1,5 @@
 <div style="text-align: right; padding-top: 10px; padding-bottom: 10px">
-    <button pButton label="Logout" icon="pi pi-user-minus" style="margin-left:.25em" (click)="onLogout()"></button>
-    <button pButton label="Login" icon="pi pi-user" style="margin-left:.25em" (click)="onLogin()"></button>
-    <button pButton label="Register" icon="pi pi-user-plus" style="margin-left:.25em" (click)="onRegister()"></button>
+    <button *ngIf="user !== undefined" pButton label="Logout" icon="pi pi-user-minus" style="margin-left:.25em" (click)="onLogout()"></button>
+    <button *ngIf="user === undefined" pButton label="Login" icon="pi pi-user" style="margin-left:.25em" (click)="onLogin()"></button>
+    <button  *ngIf="user === undefined" pButton label="Register" icon="pi pi-user-plus" style="margin-left:.25em" (click)="onRegister()"></button>
 </div>

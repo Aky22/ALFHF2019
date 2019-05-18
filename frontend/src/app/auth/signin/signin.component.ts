@@ -21,10 +21,8 @@ export class SigninComponent implements OnInit {
   async onSignin(){
     this.user.username = this.signinForm.value.username;
     this.user.password = this.signinForm.value.password;
-    const loggedIn = await this.userService.login(this.user);
-    if(loggedIn) {
-      this.router.navigate(['project-manager/list']);
-    }
+    this.userService.login(this.user);
+
   }
 
 }

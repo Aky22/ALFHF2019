@@ -1,10 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ProjectInterface} from '../../shared/model/interfaces/project.interface';
-import {SimpleUserInterface} from '../../shared/model/interfaces/user.interface';
+import {SimpleUserInterface, UserInterface} from '../../shared/model/interfaces/user.interface';
 import {TaskInterface} from '../../shared/model/interfaces/task.interface';
 import {ProjectService} from '../../shared/services/project.service';
 import {UsersService} from '../../shared/services/users.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {ProjectHttpService} from '../../shared/services/http/project-http.service';
+import {UsersHttpService} from '../../shared/services/http/users-http.service';
 
 @Component({
   selector: 'app-project-edit',
@@ -14,28 +16,42 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class ProjectDetailsComponent implements OnInit {
   mode: string;
   projectId: number;
-  users: SimpleUserInterface[];
+  users: UserInterface[] = [];
   project: ProjectInterface;
-  contributors: SimpleUserInterface[] = [];
+  contributors: UserInterface[] = [];
   tasks: TaskInterface[] = [];
   selectedTask: TaskInterface;
   display = {details: false, edit: false, new: false};
 
-  constructor(private projectService: ProjectService,
-              private usersService: UsersService,
+  constructor(private projectHttpService: ProjectHttpService,
+              private usersHttpService: UsersHttpService,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.users = this.usersService.getSimpleUsers();
     this.projectId = +this.route.snapshot.paramMap.get('id');
     this.mode = this.route.snapshot.paramMap.get('mode');
-    this.project = this.projectService.getProjectById(this.projectId);
-    this.tasks = this.projectService.getProjectsTask(this.project.id);
     console.log(this.tasks);
-    for (const contr of this.project.contributorIds){
-      this.contributors.push(this.usersService.getSimpleUserById(contr));
-    }
+
+
+    this.projectHttpService.getProjectById(this.projectId).subscribe(
+      (response) => {
+        this.project = response;
+      }, (error) => {
+        console.log(error);
+      }
+    );
+
+    this.usersHttpService.getUsers().subscribe(
+      (response) => {
+        this.users = response;
+      }, (error) => {
+        console.log(error);
+      }
+    );
+
+
+
   }
 
   onBack(){
@@ -43,9 +59,13 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   onSave(){
-    // TODO
-    this.projectService.saveProject(this.project);
-    this.router.navigate(['/project-manager/list']);
+    this.projectHttpService.saveProject(this.project).subscribe(
+      (response) => {
+        console.log(response);
+        this.router.navigate(['/project-manager/list']);
+
+      }
+    );
   }
 
 

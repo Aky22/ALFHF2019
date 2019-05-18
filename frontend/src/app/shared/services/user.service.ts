@@ -1,41 +1,69 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {UserInterface} from '../model/interfaces/user.interface';
-import {UserHttpService} from "./http/user-http.service";
-import {Router} from "@angular/router";
+import {UserHttpService} from './http/user-http.service';
+import {Router} from '@angular/router';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   user: UserInterface;
+  userChange = new EventEmitter<UserInterface>();
 
-  constructor(private userHttpService: UserHttpService, private router: Router) { }
+  constructor(private userHttpService: UserHttpService, private router: Router) {
+    if (localStorage.getItem('jwt')){
+      this.user = this.getUser();
+    }
+  }
 
-  async login(data: {username: string, password: string}){
-    return this.userHttpService.login(data).subscribe(
+  async login(data: {username: string, password: string}) {
+    this.userHttpService.login(data).subscribe(
       (response) => {
-      localStorage.setItem("jwt", response.token);
-      return true;
+      localStorage.setItem('jwt', response.token);
+      this.userHttpService.getUser().subscribe(
+        (user) => {
+          this.user = user;
+          this.router.navigate(['project-manager/list']);
+          this.userChange.emit(this.user);
+        }, (error) => {
+          console.log(error);
+        }
+      );
     }, (error) => {
         console.log(error);
-        return false;
       });
   }
 
-  async logout(){
+  logout() {
     localStorage.removeItem('jwt');
+    this.user = undefined;
+    this.userChange.emit(this.user);
     this.router.navigate(['login']);
   }
 
-  async register(data: UserInterface){
-    this.user = data;
-  console.log('Register: ');
-  console.log(data);
-    // TODO
+  async register(data: UserInterface) {
+    this.userHttpService.register(data).subscribe(
+      (response) => {
+        this.user = response;
+        this.userChange.emit(this.user);
+        this.router.navigate(['project-manager/list']);
+      }, (error) => {
+        console.log(error);
+      }
+    );
   }
 
   getUser() {
-    return this.userHttpService.getUser();
+    if (this.user === undefined) {
+      this.userHttpService.getUser().pipe(map( (response) => {
+        this.user = response;
+        this.userChange.emit(this.user);
+        return this.user;
+      }, (error) => {
+        this.logout();
+      }));
+    }
+    return this.user;
   }
-
 }

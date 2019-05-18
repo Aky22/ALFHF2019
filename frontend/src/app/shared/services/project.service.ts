@@ -37,7 +37,6 @@ export class ProjectService {
       data.id = this.projects.length * 10 + 1;
       this.projects.push(data);
     }
-
     // TODO
   }
 

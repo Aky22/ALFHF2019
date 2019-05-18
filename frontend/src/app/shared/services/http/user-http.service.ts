@@ -18,12 +18,8 @@ export class UserHttpService {
     return this.httpClient.post<UserInterface>(this.url + 'auth/signup', data);
   }
 
-  getSimpleUsers(){
-    return this.httpClient.get<SimpleUserInterface>(this.url + 'simple-users');
-  }
-
   getUser() {
-    return this.httpClient.get<UserInterface>(this.url + 'users/me')
+    return this.httpClient.get<UserInterface>(this.url + 'users/me');
   }
 
 }

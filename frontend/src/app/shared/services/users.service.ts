@@ -15,7 +15,7 @@ export class UsersService {
     ];
   }
 
-  getSimpleUsers(){
+  getSimpleUsers() {
     const simpleUsers: SimpleUserInterface[] = [];
     for (const user of this.users){
       simpleUsers.push({id: user.id, email: user.email, username: user.username});
@@ -23,8 +23,8 @@ export class UsersService {
     return simpleUsers;
   }
 
-  getSimpleUserById(id: number){
-    for (const user of this.users){
+  getSimpleUserById(id: number) {
+    for (const user of this.users) {
       if (user.id === id) {
         return {id: user.id, email: user.email, username: user.username};
       }

@@ -15,5 +15,5 @@ export interface SimpleUserInterface {
 }
 
 export interface LoginInterface {
-  token: string
+  token: string;
 }

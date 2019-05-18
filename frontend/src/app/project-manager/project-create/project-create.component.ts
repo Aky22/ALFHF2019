@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ProjectInterface} from '../../shared/model/interfaces/project.interface';
-import {UsersService} from '../../shared/services/users.service';
-import {SimpleUserInterface} from '../../shared/model/interfaces/user.interface';
+import {SimpleUserInterface, UserInterface} from '../../shared/model/interfaces/user.interface';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ProjectService} from '../../shared/services/project.service';
 import {Router} from '@angular/router';
+import {ProjectHttpService} from '../../shared/services/http/project-http.service';
+import {UsersHttpService} from '../../shared/services/http/users-http.service';
 
 @Component({
   selector: 'app-project-create',
@@ -13,17 +13,21 @@ import {Router} from '@angular/router';
 })
 export class ProjectCreateComponent implements OnInit {
   project: ProjectInterface;
-  simpleUsers: SimpleUserInterface[] = [];
+  users: UserInterface[] = [];
   selectedSimpleUsers: SimpleUserInterface[] = [];
   projectForm: FormGroup;
 
-  constructor(private usersService: UsersService,
+  constructor(private usersHttpService: UsersHttpService,
+              private projectHttpService: ProjectHttpService,
               private fb: FormBuilder,
-              private projectService: ProjectService,
               private router: Router) { }
 
   ngOnInit() {
-    this.simpleUsers = [];
+    this.usersHttpService.getUsers().subscribe((response) => {
+      this.users = response;
+    }, (error) => {
+      console.log(error);
+    });
     this.selectedSimpleUsers = [];
     this.project = {
       name: '',
@@ -31,12 +35,11 @@ export class ProjectCreateComponent implements OnInit {
       deadline: new Date(),
       contributorIds: []
     };
-    this.simpleUsers = this.usersService.getSimpleUsers();
     this.projectForm = this.fb.group({
       'name': new FormControl('', Validators.required),
       'description': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),
       'deadline': new FormControl('', Validators.required),
-      'contributorIds': new FormControl('', Validators.required)
+      'contributorIds': new FormControl('')
     });
   }
 
@@ -45,14 +48,19 @@ export class ProjectCreateComponent implements OnInit {
     this.project.description = this.projectForm.value.description;
     this.project.deadline = this.projectForm.value.deadline;
     this.project.contributorIds = this.projectForm.value.contributorIds;
-    this.projectService.saveProject(this.project);
-    console.log(this.projectForm);
-    this.projectForm.reset();
-    this.router.navigate(['/project-manager/list']);
-
+    this.projectHttpService.saveProject(this.project).subscribe(
+      (response) => {
+        console.log(response);
+        this.projectForm.reset();
+        this.router.navigate(['/project-manager/list']);
+      }, (error) => {
+        console.log(error);
+      }
+    );
   }
 
   onBack(){
+    this.projectForm.reset();
     this.router.navigate(['/project-manager/list']);
   }
 

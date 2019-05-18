@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {TaskInterface} from '../../shared/model/interfaces/task.interface';
-import {TaskService} from '../../shared/services/task.service';
 import {ProjectInterface} from '../../shared/model/interfaces/project.interface';
 import {ProjectService} from '../../shared/services/project.service';
 import {Router} from '@angular/router';
 import {MenuItem} from 'primeng/api';
+import {ProjectHttpService} from '../../shared/services/http/project-http.service';
 
 @Component({
   selector: 'app-project-list',
@@ -15,10 +14,11 @@ export class ProjectListComponent implements OnInit {
   projects: ProjectInterface[];
   cols: any[];
   items: MenuItem[];
-  constructor(private projectService: ProjectService,
+  constructor(private projectHttpService: ProjectHttpService,
               private router: Router) { }
 
   ngOnInit() {
+    this.refreshProjects();
     this.items = [
       {label: 'Edit', icon: 'pi pi-refresh', command: () => {
           this.onSelectEdit(null);
@@ -27,7 +27,6 @@ export class ProjectListComponent implements OnInit {
           this.onSelectRemove(null);
         }},
     ];
-    this.projects = this.projectService.getProjects();
     this.cols = [
       { field: 'name', header: 'Name' },
       { field: 'deadline', header: 'Deadline'}];
@@ -42,8 +41,8 @@ export class ProjectListComponent implements OnInit {
   }
 
   onSelectRemove(project: ProjectInterface){
-    this.projectService.removeProject(project.id);
-    this.projects.splice(this.projects.indexOf(project), 1);
+    this.projectHttpService.deleteProjectById(project.id);
+    this.refreshProjects();
   }
 
   onNewProject(){
@@ -59,6 +58,16 @@ export class ProjectListComponent implements OnInit {
           this.onSelectRemove(project);
         }},
     ];
+  }
+
+  refreshProjects(){
+    this.projectHttpService.getAllProject().subscribe(
+      (response) =>{
+        this.projects = response;
+      }, (error) => {
+        console.log(error);
+      }
+    );
   }
 
 }
