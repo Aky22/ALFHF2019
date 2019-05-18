@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {UserInterface} from '../model/interfaces/user.interface';
-import {Role} from '../model/enums/role.enum';
+import {UserHttpService} from "./http/user-http.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -8,24 +9,22 @@ import {Role} from '../model/enums/role.enum';
 export class UserService {
   user: UserInterface;
 
-  constructor() { }
+  constructor(private userHttpService: UserHttpService, private router: Router) { }
 
-  async login(data: {email: string, password: string}){
-    console.log('Login: ');
-    this.user = {
-      id: 1,
-      email: data.email,
-      username: 'Dugesz',
-      role: Role.Admin,
-    };
-    console.log(this.user);
-    // TODO
+  async login(data: {username: string, password: string}){
+    return this.userHttpService.login(data).subscribe(
+      (response) => {
+      localStorage.setItem("jwt", response.token);
+      return true;
+    }, (error) => {
+        console.log(error);
+        return false;
+      });
   }
 
   async logout(){
-    console.log('Logout: ');
-    console.log(this.user);
-    // TODO
+    localStorage.removeItem('jwt');
+    this.router.navigate(['login']);
   }
 
   async register(data: UserInterface){
@@ -35,8 +34,8 @@ export class UserService {
     // TODO
   }
 
-  isLoggedIn(){
-    return this.user === undefined;
-    // TODO
+  getUser() {
+    return this.userHttpService.getUser();
   }
+
 }

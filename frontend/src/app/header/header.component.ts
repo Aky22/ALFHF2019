@@ -27,8 +27,4 @@ export class HeaderComponent implements OnInit {
   onRegister(){
     this.router.navigate(['/register']);
   }
-
-  isLoggedin(){
-    return this.userService.isLoggedIn();
-  }
 }

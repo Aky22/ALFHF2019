@@ -13,3 +13,7 @@ export interface SimpleUserInterface {
   username: string;
   email: string;
 }
+
+export interface LoginInterface {
+  token: string
+}

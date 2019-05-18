@@ -1,5 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
+import {UserService} from "../../shared/services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signin',
@@ -8,18 +10,21 @@ import {NgForm} from '@angular/forms';
 })
 export class SigninComponent implements OnInit {
   @ViewChild('f') signinForm: NgForm;
-  user: {email: string, password: string};
+  user: {username: string, password: string};
 
-  constructor() { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    this.user = {email: '', password: ''};
+    this.user = {username: '', password: ''};
   }
 
-  onSignin(){
-    this.user.email = this.signinForm.value.email;
+  async onSignin(){
+    this.user.username = this.signinForm.value.username;
     this.user.password = this.signinForm.value.password;
-    // TODO call login
+    const loggedIn = await this.userService.login(this.user);
+    if(loggedIn) {
+      this.router.navigate(['project-manager/list']);
+    }
   }
 
 }
