@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {ProjectInterface, ProjectROInterface, SimpleProjectInterface} from '../model/interfaces/project.interface';
 import {ProjectHttpService} from './http/project-http.service';
 import {TaskInterface, TaskROInterface} from '../model/interfaces/task.interface';
+import {CommentInterface, CommentROInterface} from '../model/interfaces/comment.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -38,14 +39,18 @@ export class ProjectService {
       deadline: new Date(ro.deadline),
       description: ro.description,
       project: ro._links.project.href,
-      assignee: ro._links.assignee.href
+      assignee: ro._links.assignee.href,
+      comments: ro._links.comments.href,
     };
   }
 
-
-
-
-
-
-
+  commentROtoComment(ro: CommentROInterface): CommentInterface {
+    return {
+      id: ro.id,
+      content: ro.content,
+      user: ro._links.user.href,
+      project: ro._links.project.href,
+      task: ro._links.task.href
+    };
+  }
 }

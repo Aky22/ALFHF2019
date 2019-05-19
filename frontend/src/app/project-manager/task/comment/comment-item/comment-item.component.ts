@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CommentInterface} from '../../../../shared/model/interfaces/comment.interface';
 import {SimpleUserInterface} from '../../../../shared/model/interfaces/user.interface';
 import {UsersService} from '../../../../shared/services/users.service';
+import {UsersHttpService} from '../../../../shared/services/http/users-http.service';
 
 @Component({
   selector: 'app-comment-item',
@@ -12,12 +13,15 @@ export class CommentItemComponent implements OnInit {
   @Input() comment: CommentInterface;
   user: SimpleUserInterface;
 
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService,
+              private usersHttpService: UsersHttpService) { }
 
   ngOnInit() {
-/*
-    this.user = this.usersService.getSimpleUserById(this.comment.user);
-*/
+    this.usersHttpService.getUser(this.comment.user).subscribe(
+      (response) => {
+        this.user = this.usersService.userROtoSimpleUser(response);
+      }
+    );
   }
 
 }

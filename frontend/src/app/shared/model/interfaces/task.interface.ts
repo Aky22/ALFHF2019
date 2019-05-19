@@ -5,6 +5,7 @@ export interface TaskInterface{
   deadline: Date;
   assignee: string;
   project: string;
+  comments?: string;
 }
 
 export interface TasksROInterface {
@@ -21,5 +22,6 @@ export interface TaskROInterface {
   _links: {
     assignee: {href: string};
     project: {href: string};
+    comments: {href: string};
   };
 }

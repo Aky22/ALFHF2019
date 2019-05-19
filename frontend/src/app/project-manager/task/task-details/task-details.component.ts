@@ -49,6 +49,7 @@ export class TaskDetailsComponent implements OnInit {
       this.projectHttpService.getTaskById(this.taskId).subscribe(
         (response) => {
           this.task = this.projectService.taskROtoTask(response);
+          this.refreshComments();
         }
       );
     }
@@ -102,13 +103,38 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   onNewComment(comment: CommentInterface){
-    comment.task = this.task.id;
-    // TODo
-    comment.user = 1;
-    this.taskService.addComment(comment);
+    comment.task = 'http://localhost:8080/tasks/' + this.task.id;
+    comment.project = 'http://localhost:8080/projects/' + this.projectId;
+    comment.user = 'http://localhost:8080/users/' + this.userService.getUser().id;
+    this.projectHttpService.saveComment(comment).subscribe(
+      (response) => {
+        this.refreshComments();
+      }
+    );
+  }
+
+  onDeleteComment(comment: CommentInterface) {
+    this.projectHttpService.removeCommentById(comment.id).subscribe(
+      (response) => {
+        this.refreshComments();
+      }
+    );
+  }
+
+  refreshComments(){
+    this.projectHttpService.getComments(this.task.comments).subscribe(
+      (response) => {
+        this.comments = [];
+        for (const c of response._embedded.comments){
+          this.comments.push(this.projectService.commentROtoComment(c));
+        }
+      }
+    );
   }
 
 }
+
+
 
 enum Mode {
   Details = 'Details',

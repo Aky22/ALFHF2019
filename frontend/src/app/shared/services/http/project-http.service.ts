@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ProjectInterface, ProjectROInterface, ProjectsROInterface, SimpleProjectInterface} from '../../model/interfaces/project.interface';
 import {UserInterface} from '../../model/interfaces/user.interface';
 import {TaskInterface, TaskROInterface, TasksROInterface} from '../../model/interfaces/task.interface';
+import {CommentInterface, CommentsROInterface} from '../../model/interfaces/comment.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import {TaskInterface, TaskROInterface, TasksROInterface} from '../../model/inte
 export class ProjectHttpService {
   url = 'http://localhost:8080/projects';
   urlTask = 'http://localhost:8080/tasks';
+  urlComment = 'http://localhost:8080/comments';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -67,5 +69,17 @@ export class ProjectHttpService {
 
   removeProjectById(id: number) {
     return this.httpClient.delete(this.url + '/' + id);
+  }
+
+  getComments(href: string) {
+    return this.httpClient.get<CommentsROInterface>(href);
+  }
+
+  saveComment(comment: CommentInterface){
+    return this.httpClient.post(this.urlComment, comment);
+  }
+
+  removeCommentById(id: number){
+    return this.httpClient.delete(this.urlComment + 'id');
   }
 }

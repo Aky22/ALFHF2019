@@ -9,11 +9,7 @@ export class TaskService {
   comments: CommentInterface[] = [];
 
   constructor() {
-    for (let i = 0; i < 6; i++) {
-      this.comments.push({
-        content: 'Comment ' + i + ' message!', user: 1, id: i, task: 1, project: 0
-      });
-    }
+
   }
 
   saveTask(task: TaskInterface){
@@ -28,14 +24,4 @@ export class TaskService {
     // TODO
   }
 
-  getTaskComments(id: number){
-    for (let c of this.comments){
-      c.task = id;
-    } return this.comments;
-
-  }
-
-  addComment(comment: CommentInterface){
-    this.comments.push(comment);
-  }
 }
