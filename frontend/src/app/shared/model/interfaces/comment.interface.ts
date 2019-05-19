@@ -1,7 +1,7 @@
 export interface CommentInterface {
   id?: number;
   content: string;
-  user?: number;
-  project?: number;
-  task?: number;
+  user?: any;
+  project?: any;
+  task?: any;
 }

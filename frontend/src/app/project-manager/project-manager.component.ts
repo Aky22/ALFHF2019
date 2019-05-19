@@ -7,9 +7,6 @@ import {TaskInterface} from '../shared/model/interfaces/task.interface';
   styleUrls: ['./project-manager.component.css']
 })
 export class ProjectManagerComponent implements OnInit {
-  task: TaskInterface = {
-    name: 'Task1', description: 'Task1 description', assignee: 1, deadline: new Date(), project: 1, id: 1
-  };
 
   constructor() { }
 

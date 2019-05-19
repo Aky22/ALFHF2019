@@ -3,6 +3,23 @@ export interface TaskInterface{
   name: string;
   description: string;
   deadline: Date;
-  assignee: number;
-  project: number;
+  assignee: string;
+  project: string;
+}
+
+export interface TasksROInterface {
+  _embedded: {
+    tasks: TaskROInterface[];
+  };
+}
+
+export interface TaskROInterface {
+  id: number;
+  name: string;
+  description: string;
+  deadline: Date;
+  _links: {
+    assignee: {href: string};
+    project: {href: string};
+  };
 }

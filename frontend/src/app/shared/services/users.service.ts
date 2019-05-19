@@ -17,4 +17,15 @@ export class UsersService {
       role: ro.role
     };
   }
+
+  userROtoUser(ro: UserROInterface): UserInterface {
+    return {
+      id: ro.id,
+      username: ro.username,
+      email: ro.email,
+      role: ro.role,
+      projects: ro._links.projects,
+      self: ro._links.self
+    };
+  }
 }

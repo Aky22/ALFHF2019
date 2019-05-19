@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {UsersROInterface} from '../../model/interfaces/user.interface';
+import {UserROInterface, UsersROInterface} from '../../model/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,4 +13,17 @@ export class UsersHttpService {
   getUsers(){
     return this.httpClient.get<UsersROInterface>(this.url + 'users');
   }
+
+  getUsersByHref(href: string){
+    return this.httpClient.get<UsersROInterface>(href);
+  }
+
+  getUser(href: string){
+    return this.httpClient.get<UserROInterface>(href);
+  }
+
+  getUserById(id: number){
+    return this.httpClient.get<UserROInterface>('http://localhost:8080/users/' + id);
+  }
+
 }

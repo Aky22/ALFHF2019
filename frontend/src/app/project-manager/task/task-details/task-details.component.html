@@ -43,13 +43,13 @@
                 pInputText
                 placeholder="Required"
                 [disabled]="true"
-                value="{{taskForm.value.accountableUser.username === null ? '' : taskForm.value.accountableUser.username}}">
+                value="{{taskForm.value.assignee.username === null ? '' : taskForm.value.assignee.username}}">
               <button pButton type="button" icon="pi pi-user-plus" (click)="isSelectAccountable = !isSelectAccountable" class="ui-button-warn"></button>
             </div>
             <p-listbox
               *ngIf="isSelectAccountable"
               [options]="simpleUsers"
-              [formControlName]="'accountableUser'"
+              [formControlName]="'assignee'"
               checkbox="checkbox"
               filter="filter"
               optionLabel="username"
