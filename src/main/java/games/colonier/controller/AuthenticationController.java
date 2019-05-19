@@ -33,7 +33,7 @@ public class AuthenticationController {
     private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<?> register(@RequestBody LoginUser loginUser) throws AuthenticationException {
+    public ResponseEntity<?> login(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -46,8 +46,8 @@ public class AuthenticationController {
         return ResponseEntity.ok(new AuthToken(token));
     }
 
-    @RequestMapping(value="/signup", method = RequestMethod.POST)
-    public ResponseEntity<?> sign_up(@RequestBody RegisterUser registerUser){
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public ResponseEntity<?> signup(@RequestBody RegisterUser registerUser){
         UserDto userDto = new UserDto();
         userDto.setUsername(registerUser.getUsername());
         userDto.setPassword(registerUser.getPassword());
