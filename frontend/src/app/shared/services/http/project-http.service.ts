@@ -20,7 +20,7 @@ export class ProjectHttpService {
   }
 
   saveProject(data: ProjectInterface){
-    return this.httpClient.post<ProjectInterface>(this.url, data);
+    return this.httpClient.post<ProjectInterface>(this.url, {name: data.name, description: data.description, deadline: data.deadline});
   }
 
   deleteProjectById(id: number){

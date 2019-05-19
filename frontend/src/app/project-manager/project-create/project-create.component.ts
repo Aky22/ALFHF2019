@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ProjectHttpService} from '../../shared/services/http/project-http.service';
 import {UsersHttpService} from '../../shared/services/http/users-http.service';
+import {UsersService} from '../../shared/services/users.service';
 
 @Component({
   selector: 'app-project-create',
@@ -13,18 +14,23 @@ import {UsersHttpService} from '../../shared/services/http/users-http.service';
 })
 export class ProjectCreateComponent implements OnInit {
   project: ProjectInterface;
-  users: UserInterface[] = [];
+  users: SimpleUserInterface[] = [];
   selectedSimpleUsers: SimpleUserInterface[] = [];
   projectForm: FormGroup;
 
   constructor(private usersHttpService: UsersHttpService,
               private projectHttpService: ProjectHttpService,
+              private usersService: UsersService,
               private fb: FormBuilder,
               private router: Router) { }
 
   ngOnInit() {
-    this.usersHttpService.getUsers().subscribe((response) => {
-      this.users = response;
+    this.usersHttpService.getUsers().subscribe(
+      (response) => {
+      for (let user of response._embedded.users){
+        this.users.push(this.usersService.userROtoSimpleUser(user));
+      }
+      console.log(this.users);
     }, (error) => {
       console.log(error);
     });
@@ -48,6 +54,7 @@ export class ProjectCreateComponent implements OnInit {
     this.project.description = this.projectForm.value.description;
     this.project.deadline = this.projectForm.value.deadline;
     this.project.contributors = this.projectForm.value.contributorIds;
+    console.log(this.project);
     this.projectHttpService.saveProject(this.project).subscribe(
       (response) => {
         console.log(response);

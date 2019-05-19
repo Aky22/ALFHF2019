@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ProjectInterface} from '../../shared/model/interfaces/project.interface';
+import {ProjectInterface, SimpleProjectInterface} from '../../shared/model/interfaces/project.interface';
 import {Router} from '@angular/router';
 import {MenuItem} from 'primeng/api';
 import {ProjectHttpService} from '../../shared/services/http/project-http.service';
+import {ProjectService} from '../../shared/services/project.service';
 
 @Component({
   selector: 'app-project-list',
@@ -10,10 +11,11 @@ import {ProjectHttpService} from '../../shared/services/http/project-http.servic
   styleUrls: ['./project-list.component.css']
 })
 export class ProjectListComponent implements OnInit {
-  projects: ProjectInterface[];
+  projects: SimpleProjectInterface[] = [];
   cols: any[];
   items: MenuItem[];
   constructor(private projectHttpService: ProjectHttpService,
+              private projectService: ProjectService,
               private router: Router) { }
 
   ngOnInit() {
@@ -31,24 +33,24 @@ export class ProjectListComponent implements OnInit {
       { field: 'deadline', header: 'Deadline'}];
   }
 
-  onSelectView(project: ProjectInterface){
+  onSelectView(project: ProjectInterface) {
     this.router.navigate(['/project-manager/details/view/' + project.id ]);
   }
 
-  onSelectEdit(project: ProjectInterface){
+  onSelectEdit(project: ProjectInterface) {
     this.router.navigate(['/project-manager/details/edit/' + project.id ]);
   }
 
-  onSelectRemove(project: ProjectInterface){
+  onSelectRemove(project: ProjectInterface) {
     this.projectHttpService.deleteProjectById(project.id);
     this.refreshProjects();
   }
 
-  onNewProject(){
+  onNewProject() {
     this.router.navigate(['/project-manager/create']);
   }
 
-  getItems(project: ProjectInterface){
+  getItems(project: ProjectInterface) {
     return [
       {label: 'Edit', icon: 'pi pi-pencil', command: () => {
           this.onSelectEdit(project);
@@ -59,14 +61,12 @@ export class ProjectListComponent implements OnInit {
     ];
   }
 
-  refreshProjects(){
+  refreshProjects() {
     this.projectHttpService.getAllProject().subscribe(
-      (response) =>{
-        console.log(response);
-        console.log(response._embedded.projects);
-/*
-        this.projects = response._embedded.projects;
-*/
+      (response) => {
+        for (const project of response._embedded.projects) {
+          this.projects.push(this.projectService.projectROtoSimpleProject(project));
+        }
       }, (error) => {
         console.log(error);
       }

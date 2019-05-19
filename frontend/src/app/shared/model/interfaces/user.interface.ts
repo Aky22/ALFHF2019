@@ -13,10 +13,27 @@ export interface SimpleUserInterface {
   id?: number;
   username: string;
   email: string;
+  role: Role;
 }
 
 export interface LoginInterface {
   token: string;
+}
+
+export interface UsersROInterface {
+  _embedded: {
+    users: UserROInterface[]
+  };
+}
+
+export interface UserROInterface {
+  id: number;
+  username: string;
+  email: string;
+  role: Role;
+  _links: {
+    projects: {href: string};
+  };
 }
 
 

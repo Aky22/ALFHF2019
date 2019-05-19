@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ProjectInterface} from '../../model/interfaces/project.interface';
-import {UserInterface} from '../../model/interfaces/user.interface';
+import {UsersROInterface} from '../../model/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +11,6 @@ export class UsersHttpService {
   constructor(private httpClient: HttpClient) { }
 
   getUsers(){
-    return this.httpClient.get<UserInterface[]>(this.url + 'users');
+    return this.httpClient.get<UsersROInterface>(this.url + 'users');
   }
 }
