@@ -13,4 +13,23 @@ export interface SimpleProjectInterface {
   id?: number;
   name: string;
   deadline: Date;
+  description: string;
+}
+
+export interface ProjectsROInterface {
+  _embedded: {
+    projects: ProjectROInterface[]
+  };
+}
+
+export interface ProjectROInterface {
+  name: string;
+  deadline: Date;
+  description: string;
+  _links: {
+    contributors: {href: string};
+    projects: {href: string};
+    self: {href: string};
+    tasks: {href: string}
+  };
 }

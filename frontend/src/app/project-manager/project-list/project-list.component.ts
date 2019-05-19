@@ -62,7 +62,11 @@ export class ProjectListComponent implements OnInit {
   refreshProjects(){
     this.projectHttpService.getAllProject().subscribe(
       (response) =>{
-        this.projects = response;
+        console.log(response);
+        console.log(response._embedded.projects);
+/*
+        this.projects = response._embedded.projects;
+*/
       }, (error) => {
         console.log(error);
       }
