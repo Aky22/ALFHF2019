@@ -1,13 +1,11 @@
-import {TaskInterface} from './task.interface';
-import {UserInterface} from './user.interface';
 
 export interface ProjectInterface {
   id?: number;
   name: string;
   description: string;
-  deadline: Date; // or date
-  contributors?: UserInterface[];
-  tasks?: TaskInterface[];
+  deadline: Date;
+  contributors: {href: string};
+  tasks: {href: string};
 }
 
 export interface SimpleProjectInterface {

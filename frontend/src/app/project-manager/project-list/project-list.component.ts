@@ -42,8 +42,14 @@ export class ProjectListComponent implements OnInit {
   }
 
   onSelectRemove(project: ProjectInterface) {
-    this.projectHttpService.deleteProjectById(project.id);
-    this.refreshProjects();
+    this.projectHttpService.removeProjectById(project.id).subscribe(
+      (response) => {
+        console.log(response);
+        this.refreshProjects();
+      }, (error) => {
+        console.log(error);
+      }
+    );
   }
 
   onNewProject() {
@@ -64,6 +70,7 @@ export class ProjectListComponent implements OnInit {
   refreshProjects() {
     this.projectHttpService.getAllProject().subscribe(
       (response) => {
+        this.projects = [];
         for (const project of response._embedded.projects) {
           this.projects.push(this.projectService.projectROtoSimpleProject(project));
         }

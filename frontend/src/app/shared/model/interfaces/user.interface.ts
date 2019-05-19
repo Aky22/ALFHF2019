@@ -4,9 +4,10 @@ export interface UserInterface {
   id?: number;
   username: string;
   email: string;
-  role: Role;
+  role?: Role;
   password?: string;
-  projects?: string;
+  projects?: {href: string};
+  self?: {href: string};
 }
 
 export interface SimpleUserInterface {
@@ -33,6 +34,7 @@ export interface UserROInterface {
   role: Role;
   _links: {
     projects: {href: string};
+    self: {href: string};
   };
 }
 

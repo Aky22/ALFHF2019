@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ProjectInterface} from '../../shared/model/interfaces/project.interface';
+import {ProjectInterface, SimpleProjectInterface} from '../../shared/model/interfaces/project.interface';
 import {SimpleUserInterface, UserInterface} from '../../shared/model/interfaces/user.interface';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
@@ -13,7 +13,7 @@ import {UsersService} from '../../shared/services/users.service';
   styleUrls: ['./project-create.component.css']
 })
 export class ProjectCreateComponent implements OnInit {
-  project: ProjectInterface;
+  project: SimpleProjectInterface;
   users: SimpleUserInterface[] = [];
   selectedSimpleUsers: SimpleUserInterface[] = [];
   projectForm: FormGroup;
@@ -27,7 +27,7 @@ export class ProjectCreateComponent implements OnInit {
   ngOnInit() {
     this.usersHttpService.getUsers().subscribe(
       (response) => {
-      for (let user of response._embedded.users){
+      for (const user of response._embedded.users) {
         this.users.push(this.usersService.userROtoSimpleUser(user));
       }
       console.log(this.users);
@@ -39,22 +39,18 @@ export class ProjectCreateComponent implements OnInit {
       name: '',
       description: '',
       deadline: new Date(),
-      contributors: []
     };
     this.projectForm = this.fb.group({
       'name': new FormControl('', Validators.required),
       'description': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),
-      'deadline': new FormControl('', Validators.required),
-      'contributorIds': new FormControl('')
+      'deadline': new FormControl('', Validators.required)
     });
   }
 
-  onSubmit(){
+  onSubmit() {
     this.project.name = this.projectForm.value.name;
     this.project.description = this.projectForm.value.description;
     this.project.deadline = this.projectForm.value.deadline;
-    this.project.contributors = this.projectForm.value.contributorIds;
-    console.log(this.project);
     this.projectHttpService.saveProject(this.project).subscribe(
       (response) => {
         console.log(response);
@@ -66,7 +62,7 @@ export class ProjectCreateComponent implements OnInit {
     );
   }
 
-  onBack(){
+  onBack() {
     this.projectForm.reset();
     this.router.navigate(['/project-manager/list']);
   }

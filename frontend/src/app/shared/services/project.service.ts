@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ProjectInterface, ProjectROInterface, SimpleProjectInterface} from '../model/interfaces/project.interface';
 import {ProjectHttpService} from './http/project-http.service';
+import {TaskInterface, TaskROInterface} from '../model/interfaces/task.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,10 @@ export class ProjectService {
     return {
       id: ro.id,
       name: ro.name,
-      deadline: ro.deadline,
-      description: ro.description
+      deadline: new Date(ro.deadline),
+      description: ro.description,
+      contributors: ro._links.contributors,
+      tasks: ro._links.tasks
     };
   }
 
@@ -23,8 +26,19 @@ export class ProjectService {
     return {
       id: ro.id,
       name: ro.name,
-      deadline: ro.deadline,
+      deadline: new Date(ro.deadline),
       description: ro.description
+    };
+  }
+
+  taskROtoTask(ro: TaskROInterface): TaskInterface {
+    return {
+      id: ro.id,
+      name: ro.name,
+      deadline: new Date(ro.deadline),
+      description: ro.description,
+      project: ro._links.project.href,
+      assignee: ro._links.assignee.href
     };
   }
 

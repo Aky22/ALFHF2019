@@ -1,4 +1,4 @@
-<div *ngIf="task !== undefined && accountableUser !== undefined" >
+<div *ngIf="task !== undefined && assignee !== undefined" >
   <p-panel>
     <p-header>
       <div class="ui-helper-clearfix">
@@ -18,7 +18,7 @@
     <div class="ui-grid ui-grid-responsive">
     <div class="ui-grid-row">
       <div class="ui-grid-col-6">Accountable</div>
-      <div class="ui-grid-col-6">{{accountableUser.username}}</div>
+      <div class="ui-grid-col-6">{{assignee.username}}</div>
     </div>
     <div class="ui-grid-row">
       <div class="ui-grid-col-6">Deadline</div>
