@@ -36,6 +36,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     private Set<SimpleGrantedAuthority> getAuthority(User user) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        if(user.getRole().equals(User.Roles.ADMIN)) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_BASIC"));
+        }
         authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
         return authorities;
     }

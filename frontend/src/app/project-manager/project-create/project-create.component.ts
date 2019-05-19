@@ -29,7 +29,7 @@ export class ProjectCreateComponent implements OnInit {
       console.log(error);
     });
     this.selectedSimpleUsers = [];
-    this.project = {
+    this.project._embedded.projects = {
       name: '',
       description: '',
       deadline: new Date(),
@@ -44,10 +44,10 @@ export class ProjectCreateComponent implements OnInit {
   }
 
   onSubmit(){
-    this.project.name = this.projectForm.value.name;
-    this.project.description = this.projectForm.value.description;
-    this.project.deadline = this.projectForm.value.deadline;
-    this.project.contributors = this.projectForm.value.contributorIds;
+    this.project._embedded.projects.name = this.projectForm.value.name;
+    this.project._embedded.projects.description = this.projectForm.value.description;
+    this.project._embedded.projects.deadline = this.projectForm.value.deadline;
+    this.project._embedded.projects.contributors = this.projectForm.value.contributorIds;
     this.projectHttpService.saveProject(this.project).subscribe(
       (response) => {
         console.log(response);

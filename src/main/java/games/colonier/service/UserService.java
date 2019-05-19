@@ -2,7 +2,6 @@ package games.colonier.service;
 
 import games.colonier.entity.User;
 import games.colonier.entity.UserDto;
-import games.colonier.repository.UserRepository;
 
 import java.util.List;
 

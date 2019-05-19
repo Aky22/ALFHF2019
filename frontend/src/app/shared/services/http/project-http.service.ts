@@ -7,12 +7,12 @@ import {UserInterface} from '../../model/interfaces/user.interface';
   providedIn: 'root'
 })
 export class ProjectHttpService {
-  url = 'http://localhost:8080/project';
+  url = 'http://localhost:8080/projects';
 
   constructor(private httpClient: HttpClient) { }
 
   getAllProject(){
-    return this.httpClient.get<ProjectInterface[]>(this.url + '/list');
+    return this.httpClient.get<ProjectInterface[]>(this.url);
   }
 
   getProjectById(id: number){
@@ -20,7 +20,7 @@ export class ProjectHttpService {
   }
 
   saveProject(data: ProjectInterface){
-    return this.httpClient.post<ProjectInterface>(this.url + 'create', data);
+    return this.httpClient.post<ProjectInterface>(this.url, data);
   }
 
   deleteProjectById(id: number){

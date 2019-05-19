@@ -2,6 +2,7 @@ package games.colonier.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,6 +20,9 @@ public class Project {
 
     @ManyToMany
     private Set<User> contributors;
+
+    @OneToMany(mappedBy = "project")
+    private List<Task> tasks;
 
     public long getId() {
         return id;
@@ -58,5 +62,13 @@ public class Project {
 
     public void setContributors(Set<User> contributors) {
         this.contributors = contributors;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }
