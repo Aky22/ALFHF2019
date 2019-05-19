@@ -29,7 +29,7 @@ public class Task {
 
     private Date deadline;
 
-    @OneToMany(mappedBy = "tasks")
+    @OneToMany(mappedBy = "task")
     private List<Comment> comments;
 
     public long getId() {
