@@ -6,6 +6,7 @@ export interface UserInterface {
   email: string;
   role: Role;
   password?: string;
+  projects?: string;
 }
 
 export interface SimpleUserInterface {

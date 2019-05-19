@@ -33,7 +33,7 @@ export class ProjectCreateComponent implements OnInit {
       name: '',
       description: '',
       deadline: new Date(),
-      contributorIds: []
+      contributors: []
     };
     this.projectForm = this.fb.group({
       'name': new FormControl('', Validators.required),
@@ -47,7 +47,7 @@ export class ProjectCreateComponent implements OnInit {
     this.project.name = this.projectForm.value.name;
     this.project.description = this.projectForm.value.description;
     this.project.deadline = this.projectForm.value.deadline;
-    this.project.contributorIds = this.projectForm.value.contributorIds;
+    this.project.contributors = this.projectForm.value.contributorIds;
     this.projectHttpService.saveProject(this.project).subscribe(
       (response) => {
         console.log(response);

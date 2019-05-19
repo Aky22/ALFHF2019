@@ -1,9 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProjectInterface} from '../../shared/model/interfaces/project.interface';
-import {SimpleUserInterface, UserInterface} from '../../shared/model/interfaces/user.interface';
+import { UserInterface} from '../../shared/model/interfaces/user.interface';
 import {TaskInterface} from '../../shared/model/interfaces/task.interface';
-import {ProjectService} from '../../shared/services/project.service';
-import {UsersService} from '../../shared/services/users.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProjectHttpService} from '../../shared/services/http/project-http.service';
 import {UsersHttpService} from '../../shared/services/http/users-http.service';

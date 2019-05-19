@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ProjectInterface, SimpleProjectInterface} from '../../model/interfaces/project.interface';
+import {UserInterface} from '../../model/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +33,13 @@ export class ProjectHttpService {
       body: project
     };
     return this.httpClient.put(this.url + '/' + project.id,  httpOptions);
+  }
+
+  getContributors(href: string){
+    return this.httpClient.get<UserInterface[]>(href);
+  }
+
+  getTasks(href: string){
+    return this.httpClient.get<UserInterface[]>(href);
   }
 }

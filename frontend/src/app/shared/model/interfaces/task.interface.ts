@@ -3,6 +3,6 @@ export interface TaskInterface{
   name: string;
   description: string;
   deadline: Date;
-  accountableId: number;
-  projectId: number;
+  assignee: number;
+  project: number;
 }

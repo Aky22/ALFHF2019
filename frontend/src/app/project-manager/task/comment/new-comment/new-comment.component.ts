@@ -13,14 +13,14 @@ export class NewCommentComponent implements OnInit {
 
   ngOnInit() {
     this.comment = {
-      message: ''
+      content: ''
     };
   }
 
   onSend(){
     this.commented.emit(this.comment);
     this.comment = {
-      message: ''
+      content: ''
     };
   }
 

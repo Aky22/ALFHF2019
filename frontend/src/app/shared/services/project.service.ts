@@ -9,9 +9,9 @@ export class ProjectService {
   projects: ProjectInterface[] = [];
 
   constructor() {
-    this.projects.push({id: 1, name: 'Teszt1', contributorIds: [1, 2], deadline: new Date(), description: 'Teszt 1'});
-    this.projects.push({id: 2, name: 'Teszt2', contributorIds: [1], deadline: new Date(), description: 'Teszt 2'});
-    this.projects.push({id: 3, name: 'Teszt3', contributorIds: [], deadline: new Date(), description: 'Teszt 3'});
+    this.projects.push({id: 1, name: 'Teszt1', contributors: [1, 2], deadline: new Date(), description: 'Teszt 1'});
+    this.projects.push({id: 2, name: 'Teszt2', contributors: [1], deadline: new Date(), description: 'Teszt 2'});
+    this.projects.push({id: 3, name: 'Teszt3', contributors: [], deadline: new Date(), description: 'Teszt 3'});
 
   }
 
@@ -50,9 +50,9 @@ export class ProjectService {
 
   getProjectsTask(projId: number){
     const tasks: TaskInterface[] = [];
-    tasks.push({id: 1, name: 'Task1', description: 'Task1 desc', deadline: new Date(), accountableId: 1, projectId: projId});
-    tasks.push({id: 2, name: 'Tas21', description: 'Tas2 desc', deadline: new Date(), accountableId: 2, projectId: projId});
-    tasks.push({id: 3, name: 'Task3', description: 'Task3 desc', deadline: new Date(), accountableId: 1, projectId: projId});
+    tasks.push({id: 1, name: 'Task1', description: 'Task1 desc', deadline: new Date(), assignee: 1, project: projId});
+    tasks.push({id: 2, name: 'Tas21', description: 'Tas2 desc', deadline: new Date(), assignee: 2, project: projId});
+    tasks.push({id: 3, name: 'Task3', description: 'Task3 desc', deadline: new Date(), assignee: 1, project: projId});
     return tasks;
   }
 }

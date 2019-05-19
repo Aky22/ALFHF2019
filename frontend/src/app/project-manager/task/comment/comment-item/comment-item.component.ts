@@ -15,7 +15,7 @@ export class CommentItemComponent implements OnInit {
   constructor(private usersService: UsersService) { }
 
   ngOnInit() {
-    this.user = this.usersService.getSimpleUserById(this.comment.userId);
+    this.user = this.usersService.getSimpleUserById(this.comment.user);
   }
 
 }

@@ -34,13 +34,13 @@ export class TaskDetailsComponent implements OnInit {
       this.task = {
         name: '',
         deadline: new Date(),
-        accountableId: -1,
+        assignee: -1,
         description: '',
-        projectId: this.projectId
+        project: this.projectId
       };
       this.accountableUser = {username: '', id: -1, email: ''};
     } else {
-      this.accountableUser = this.usersService.getSimpleUserById(this.task.accountableId);
+      this.accountableUser = this.usersService.getSimpleUserById(this.task.assignee);
       this.comments = this.taskService.getTaskComments(this.task.id);
     }
     if (this.mode === undefined) {
@@ -57,7 +57,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.task.accountableId = this.accountableUser.id;
+    this.task.assignee = this.accountableUser.id;
     this.saveTask.emit(this.task);
   }
 
@@ -70,10 +70,9 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   onNewComment(comment: CommentInterface){
-    comment.taskId = this.task.id;
-    comment.parentId = this.comments[this.comments.length - 1].id;
+    comment.task = this.task.id;
     // TODo
-    comment.userId = 1;
+    comment.user = 1;
     this.taskService.addComment(comment);
   }
 

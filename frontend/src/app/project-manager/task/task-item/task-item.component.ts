@@ -35,7 +35,7 @@ export class TaskItemComponent implements OnInit {
       ];
     }
 
-    this.accountableUser = this.usersService.getSimpleUserById(this.task.accountableId);
+    this.accountableUser = this.usersService.getSimpleUserById(this.task.assignee);
   }
 
   onSelectDetails() {

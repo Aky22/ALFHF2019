@@ -11,7 +11,7 @@ export class TaskService {
   constructor() {
     for (let i = 0; i < 6; i++) {
       this.comments.push({
-        message: 'Comment ' + i + ' message!', userId: 1, id: i, taskId: 1, parentId: 0
+        content: 'Comment ' + i + ' message!', user: 1, id: i, task: 1, project: 0
       });
     }
   }
@@ -30,7 +30,7 @@ export class TaskService {
 
   getTaskComments(id: number){
     for (let c of this.comments){
-      c.taskId = id;
+      c.task = id;
     } return this.comments;
 
   }

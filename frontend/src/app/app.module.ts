@@ -29,10 +29,10 @@ import {TableModule} from 'primeng/table';
 import { HeaderComponent } from './header/header.component';
 import { CommentItemComponent } from './project-manager/task/comment/comment-item/comment-item.component';
 import { NewCommentComponent } from './project-manager/task/comment/new-comment/new-comment.component';
-import {UserHttpService} from "./shared/services/http/user-http.service";
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpHandler} from "@angular/common/http";
-import {AuthInterceptor} from "./shared/services/http/auth-interceptor";
-import {AuthGuardService} from "./shared/services/auth-guard.service";
+import {UserHttpService} from './shared/services/http/user-http.service';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpHandler} from '@angular/common/http';
+import {AuthInterceptor} from './shared/services/http/auth-interceptor';
+import {AuthGuardService} from './shared/services/auth-guard.service';
 
 
 const appRouts: Routes = [

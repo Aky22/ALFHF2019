@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {ProjectInterface} from '../../shared/model/interfaces/project.interface';
-import {ProjectService} from '../../shared/services/project.service';
 import {Router} from '@angular/router';
 import {MenuItem} from 'primeng/api';
 import {ProjectHttpService} from '../../shared/services/http/project-http.service';
