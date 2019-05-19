@@ -24,6 +24,9 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private List<Task> tasks;
 
+    @OneToMany(mappedBy = "project")
+    private List<Comment> comments;
+
     public long getId() {
         return id;
     }
@@ -70,5 +73,13 @@ public class Project {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
