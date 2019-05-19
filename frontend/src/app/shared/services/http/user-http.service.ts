@@ -15,7 +15,7 @@ export class UserHttpService {
   }
 
   register(data: UserInterface) {
-    return this.httpClient.post<UserInterface>(this.url + 'auth/signup', data);
+    return this.httpClient.post<UserInterface>(this.url + 'auth/signup', {username: data.username, password: data.password, email: data.email});
   }
 
   getUser() {

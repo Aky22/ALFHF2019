@@ -44,7 +44,7 @@
         <div class="ui-grid-col-2">
           Contributors *:
         </div>
-        <div class="ui-grid-col-6">
+        <div *ngIf="users.length > 0" class="ui-grid-col-6">
           <p-listbox
               [options]="users"
               [formControlName]="'contributorIds'"

@@ -28,7 +28,9 @@ export class TaskDetailsComponent implements OnInit {
               private fb: FormBuilder) { }
 
   ngOnInit() {
+/*
     this.simpleUsers = this.usersService.getSimpleUsers();
+*/
     console.log(this.mode);
     if (this.mode === Mode.Create){
       this.task = {
@@ -38,9 +40,13 @@ export class TaskDetailsComponent implements OnInit {
         description: '',
         project: this.projectId
       };
+/*
       this.accountableUser = {username: '', id: -1, email: ''};
+*/
     } else {
+/*
       this.accountableUser = this.usersService.getSimpleUserById(this.task.assignee);
+*/
       this.comments = this.taskService.getTaskComments(this.task.id);
     }
     if (this.mode === undefined) {
