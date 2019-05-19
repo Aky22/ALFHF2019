@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ProjectInterface, SimpleProjectInterface} from '../../model/interfaces/project.interface';
+import {ProjectInterface, ProjectsROInterface, SimpleProjectInterface} from '../../model/interfaces/project.interface';
 import {UserInterface} from '../../model/interfaces/user.interface';
 
 @Injectable({
@@ -12,10 +12,10 @@ export class ProjectHttpService {
   constructor(private httpClient: HttpClient) { }
 
   getAllProject(){
-    return this.httpClient.get<ProjectInterface[]>(this.url);
+    return this.httpClient.get<ProjectsROInterface>(this.url);
   }
 
-  getProjectById(id: number){
+  getProjectById(id: number) {
     return this.httpClient.get<ProjectInterface>(this.url + '/' + id);
   }
 
@@ -40,6 +40,10 @@ export class ProjectHttpService {
   }
 
   getTasks(href: string){
+    return this.httpClient.get<UserInterface[]>(href);
+  }
+
+  getProject(href: string){
     return this.httpClient.get<UserInterface[]>(href);
   }
 }
