@@ -13,7 +13,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
     User findByUsername(String username);
 
     @Override
-    @PreAuthorize("hasRole('ADMIN')")
     <S extends User> S save(S entity);
 
     @Override
