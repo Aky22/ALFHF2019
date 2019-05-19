@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Task {
@@ -27,6 +28,9 @@ public class Task {
     private User assignee;
 
     private Date deadline;
+
+    @OneToMany(mappedBy = "tasks")
+    private List<Comment> comments;
 
     public long getId() {
         return id;
@@ -74,5 +78,13 @@ public class Task {
 
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
