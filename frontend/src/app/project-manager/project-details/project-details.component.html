@@ -39,19 +39,20 @@
       </div>
       <div class="ui-g-12">
         <div class="ui-g-6">
-          <p-button  label="Cancel" (onClick)="onBack()"></p-button>
+          <button pButton type="button"  label="Cancel" (click)="onBack()" class="ui-button-secondary"></button>
         </div>
         <div class="ui-g-6" style="text-align: right">
-          <p-button *ngIf="isEditable()" label="Save" (onClick)="onSave()"></p-button>
+          <button  pButton type="button" class="ui-button-success" *ngIf="isEditable()" label="Save" (click)="onSave()"></button>
         </div>
       </div>
     </div>
+
 
     <div class="ui-g-6">
       <h4>Tasks</h4>
       <div class="ui-g-12 ui-g" *ngIf="tasks !== undefined">
         <div class="ui-g-12">
-          <p-button label="New task" (onClick)="onNewTask()" [disabled]="!isEditable()"></p-button>
+          <button pButton type="button" class="ui-button-success" label="New task" (click)="onNewTask()" [disabled]="!isEditable()" ></button>
         </div>
 
 

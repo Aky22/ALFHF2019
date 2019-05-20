@@ -32,11 +32,9 @@ export class UserService {
           this.userChange.emit(this.user);
           this.router.navigate(['project-manager/list']);
         }, (error) => {
-          console.log(error);
         }
       );
     }, (error) => {
-        console.log(error);
       });
   }
 
@@ -54,7 +52,6 @@ export class UserService {
         this.userChange.emit(this.user);
         this.router.navigate(['project-manager/list']);
       }, (error) => {
-        console.log(error);
       }
     );
   }

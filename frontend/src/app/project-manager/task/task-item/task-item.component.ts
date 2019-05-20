@@ -40,7 +40,7 @@ export class TaskItemComponent implements OnInit {
     );
     if (this.isEditable()){
       this.items = [
-        {label: 'Edit', icon: 'pi pi-refresh', command: () => {
+        {label: 'Edit', icon: 'pi pi-pencil', command: () => {
             this.onSelectEdit();
           }},
         {label: 'Delete', icon: 'pi pi-times', command: () => {

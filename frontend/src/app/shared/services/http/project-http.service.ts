@@ -88,7 +88,7 @@ export class ProjectHttpService {
   }
 
   removeCommentById(id: number){
-    return this.httpClient.delete(this.urlComment + 'id');
+    return this.httpClient.delete(this.urlComment + '/' + id);
   }
 
   setContributorsById(projectId: number, contributors: string){

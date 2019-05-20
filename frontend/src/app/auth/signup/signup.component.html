@@ -15,17 +15,17 @@
       </div>
       <span class="help-block" *ngIf="!email.valid && email.touched">This email address is invalid!</span>
       <div class="form-group">
-        <label for="fullName">Full name</label>
+        <label for="username">Username</label>
         <input
           type="text"
-          id="fullName"
-          name="fullName"
+          id="username"
+          name="username"
           ngModel
           class="form-control"
           required
-          #fullName="ngModel">
+          #username="ngModel">
       </div>
-      <span class="help-block" *ngIf="!fullName.valid && fullName.touched">Enter your name!</span>
+      <span class="help-block" *ngIf="!username.valid && username.touched">Enter your username!</span>
 
       <div class="form-group">
         <label for="password">Password</label>

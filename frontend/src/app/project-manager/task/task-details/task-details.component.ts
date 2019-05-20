@@ -69,7 +69,6 @@ export class TaskDetailsComponent implements OnInit {
     this.task.deadline = this.taskForm.value.deadline;
     this.task.assignee = this.taskForm.value.assignee.id;
     this.task.project = this.projectId + '';
-    console.log(this.task);
     this.saveTask.emit(this.task);
   }
 
@@ -77,9 +76,6 @@ export class TaskDetailsComponent implements OnInit {
     this.cancel.emit();
   }
 
-  onDelete(){
-    // TODO
-  }
 
   onNewComment(comment: CommentInterface){
     comment.task = 'http://localhost:8080/tasks/' + this.task.id;
@@ -100,10 +96,9 @@ export class TaskDetailsComponent implements OnInit {
     );
   }
 
-  refreshComments(){
+  refreshComments() {
     this.projectHttpService.getComments(this.task.comments).subscribe(
       (response) => {
-        console.log(response);
         this.comments = [];
         for (const c of response._embedded.comments){
           this.comments.push(this.projectService.commentROtoComment(c));
@@ -115,11 +110,8 @@ export class TaskDetailsComponent implements OnInit {
   refreshAssignee() {
     this.usersHttpService.getUser(this.task.assignee).subscribe(
       (response) => {
-        console.log('user:');
-        console.log(response);
         this.assignee = this.usersService.userROtoUser(response);
         this.refreshTaskForm();
-        console.log(this.assignee);
       }
     );
   }

@@ -28,16 +28,13 @@ export class ProjectListComponent implements OnInit {
   ngOnInit() {
     this.userService.getUserHttp().subscribe(
       (response) => {
-        console.log(response);
         this.user = {
           id: response.id,
           email: response.email,
           username: response.username,
           role: response.role
         };
-/*
-        this.user = this.usersService.userROtoUser(response);
-*/
+
         this.items = [
           {label: 'Edit', icon: 'pi pi-refresh', command: () => {
               this.onSelectEdit(null);
@@ -65,10 +62,8 @@ export class ProjectListComponent implements OnInit {
   onSelectRemove(project: ProjectInterface) {
     this.projectHttpService.removeProjectById(project.id).subscribe(
       (response) => {
-        console.log(response);
         this.refreshProjects();
       }, (error) => {
-        console.log(error);
       }
     );
   }
@@ -90,9 +85,7 @@ export class ProjectListComponent implements OnInit {
 
   refreshProjects() {
     if (this.user.role !== undefined){
-      console.log('kurvaanyad');
-      if (true) {
-        console.log('kurvaanyad2');
+      if (this.user.role === Role.Admin) {
         this.projectHttpService.getAllProject().subscribe(
           (response) => {
             this.projects = [];
@@ -100,21 +93,15 @@ export class ProjectListComponent implements OnInit {
               this.projects.push(this.projectService.projectROtoSimpleProject(project));
             }
           }, (error) => {
-            console.log(error);
           }
         );
       } else if (this.user.role === Role.Basic) {
-        console.log('kurvaanyad3');
-        console.log(this.user.projects.href);
-        this.projectHttpService.getProjects(this.user.projects.href).subscribe(
-          (response) => {
-            console.log(response);
+        this.projectHttpService.getProjects('http://localhost:8080/users/' + this.user.id + '/projects').subscribe(
+          (projects) => {
             this.projects = [];
-            for (const project of response._embedded.projects) {
+            for (const project of projects._embedded.projects) {
               this.projects.push(this.projectService.projectROtoSimpleProject(project));
             }
-          }, (error) => {
-            console.log(error);
           }
         );
       }

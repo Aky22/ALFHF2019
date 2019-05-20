@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {LoginInterface, UserInterface, UserMeROInterface, UserROInterface} from '../../model/interfaces/user.interface';
+import {
+  LoginInterface,
+  SimpleUserInterface,
+  UserInterface,
+  UserMeROInterface,
+  UserROInterface
+} from '../../model/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +25,7 @@ export class UserHttpService {
   }
 
   getUser() {
-    return this.httpClient.get<UserMeROInterface>(this.url + 'users/me');
+    return this.httpClient.get<SimpleUserInterface>(this.url + 'users/me');
   }
 
 }

@@ -41,7 +41,6 @@ export class ProjectDetailsComponent implements OnInit {
         for (let u of response._embedded.users) {
           this.users.push(this.usersService.userROtoSimpleUser(u));
         }
-        console.log(this.users);
       }
     );
   }
@@ -51,13 +50,10 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   onSave(){
-    console.log(this.project);
-    console.log(this.contributors);
     let conts = '';
     for (const c of this.contributors){
       conts = conts + 'https://localhost:8080/users/' + c.id + '\n';
     }
-    console.log(conts);
     const tempProject: SimpleProjectInterface = {
       name: this.project.name, deadline: this.project.deadline, description: this.project.description, id: this.project.id
     };
@@ -66,11 +62,8 @@ export class ProjectDetailsComponent implements OnInit {
         (response) => {
           this.projectHttpService.setContributorsById(this.projectId, conts).subscribe(
             (response1) => {
-              console.log(response1);
             }
           );
-          console.log('update');
-          console.log(response);
         }
       );
 
@@ -80,16 +73,11 @@ export class ProjectDetailsComponent implements OnInit {
   onTaskDetails(task: TaskInterface){
     this.selectedTask = task;
     this.display = {details: true, edit: false, new: false};
-    console.log('Details');
-    console.log(task);
   }
 
   onTaskEdit(task: TaskInterface){
     this.selectedTask = task;
     this.display = {details: false, edit: true, new: false};
-
-    console.log('Edit');
-    console.log(task);
   }
 
   onNewTask(){
@@ -112,9 +100,7 @@ export class ProjectDetailsComponent implements OnInit {
       project: task.project,
       assignee: task.assignee
     };
-    console.log(taskTemp);
     if (task.id !== undefined) {
-      console.log(taskTemp);
       this.projectHttpService.updateTask(taskTemp).subscribe(
         (response) => {
           this.display = {details: false, edit: false, new: false};
@@ -161,10 +147,8 @@ export class ProjectDetailsComponent implements OnInit {
           this.project.tasks = {href: ''};
         }
         if (this.project.contributors.href !== undefined ){
-          console.log(this.project.contributors.href);
           this.usersHttpService.getUsersByHref(this.project.contributors.href).subscribe(
             (cont) => {
-              console.log(cont);
               for (const c of cont._embedded.users){
                 this.contributors.push(this.usersService.userROtoSimpleUser(c));
               }
@@ -172,7 +156,6 @@ export class ProjectDetailsComponent implements OnInit {
           );
         }
       }, (error) => {
-        console.log(error);
       }
     );
   }

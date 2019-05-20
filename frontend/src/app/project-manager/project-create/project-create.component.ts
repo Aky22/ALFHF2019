@@ -30,9 +30,7 @@ export class ProjectCreateComponent implements OnInit {
       for (const user of response._embedded.users) {
         this.users.push(this.usersService.userROtoSimpleUser(user));
       }
-      console.log(this.users);
     }, (error) => {
-      console.log(error);
     });
     this.selectedSimpleUsers = [];
     this.project = {
@@ -53,11 +51,9 @@ export class ProjectCreateComponent implements OnInit {
     this.project.deadline = this.projectForm.value.deadline;
     this.projectHttpService.saveProject(this.project).subscribe(
       (response) => {
-        console.log(response);
         this.projectForm.reset();
         this.router.navigate(['/project-manager/list']);
       }, (error) => {
-        console.log(error);
       }
     );
   }

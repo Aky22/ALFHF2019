@@ -6,7 +6,7 @@
           {{col.header}}
         </th>
         <th style="width:11em" >
-          <button *ngIf="user.role === 'ADMIN'" pButton type="button" label="New project" (click)="onNewProject()"></button>
+          <button *ngIf="user.role === 'ADMIN'" pButton type="button" label="New project" (click)="onNewProject()" class="ui-button-success"></button>
         </th>
       </tr>
     </ng-template>
