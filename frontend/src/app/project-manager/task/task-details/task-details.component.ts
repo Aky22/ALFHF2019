@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TaskInterface} from '../../../shared/model/interfaces/task.interface';
 import {SimpleUserInterface, UserInterface} from '../../../shared/model/interfaces/user.interface';
 import {UsersService} from '../../../shared/services/users.service';
-import {TaskService} from '../../../shared/services/task.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {CommentInterface} from '../../../shared/model/interfaces/comment.interface';
 import {UsersHttpService} from '../../../shared/services/http/users-http.service';
@@ -33,7 +32,6 @@ export class TaskDetailsComponent implements OnInit {
               private userService: UserService,
               private projectHttpService: ProjectHttpService,
               private projectService: ProjectService,
-              private taskService: TaskService,
               private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -80,7 +78,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   onDelete(){
-    this.taskService.deleteTAsk(this.task);
+    // TODO
   }
 
   onNewComment(comment: CommentInterface){
@@ -105,6 +103,7 @@ export class TaskDetailsComponent implements OnInit {
   refreshComments(){
     this.projectHttpService.getComments(this.task.comments).subscribe(
       (response) => {
+        console.log(response);
         this.comments = [];
         for (const c of response._embedded.comments){
           this.comments.push(this.projectService.commentROtoComment(c));

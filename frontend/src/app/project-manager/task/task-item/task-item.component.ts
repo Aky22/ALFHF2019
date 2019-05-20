@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TaskInterface} from '../../../shared/model/interfaces/task.interface';
 import {UsersService} from '../../../shared/services/users.service';
 import {SimpleUserInterface} from '../../../shared/model/interfaces/user.interface';
-import {TaskService} from '../../../shared/services/task.service';
 import {MenuItem} from 'primeng/api';
 import {ProjectService} from '../../../shared/services/project.service';
 import {ProjectHttpService} from '../../../shared/services/http/project-http.service';
@@ -49,10 +48,6 @@ export class TaskItemComponent implements OnInit {
           }},
       ];
     }
-
-/*
-    this.accountableUser = this.usersService.getSimpleUserById(this.task.assignee);
-*/
   }
 
   onSelectDetails() {

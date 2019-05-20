@@ -23,6 +23,10 @@ export class ProjectHttpService {
     return this.httpClient.get<ProjectROInterface>(this.url + '/' + id);
   }
 
+  getProjects(href: string){
+    return this.httpClient.get<ProjectsROInterface>(href);
+  }
+
   saveProject(data: SimpleProjectInterface) {
     return this.httpClient.post<ProjectROInterface>(this.url, {name: data.name, description: data.description, deadline: data.deadline});
   }
@@ -31,12 +35,12 @@ export class ProjectHttpService {
     return this.httpClient.delete(this.url + '/' + id);
   }
 
-  updateProject(project: ProjectInterface) {
+  updateProject(project: ProjectInterface | SimpleProjectInterface) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       body: project
     };
-    return this.httpClient.put(this.url + '/' + project.id,  httpOptions);
+    return this.httpClient.patch(this.url + '/' + project.id,  project);
   }
 
   getTask(href: string){
@@ -52,11 +56,7 @@ export class ProjectHttpService {
   }
 
   updateTask(task: TaskInterface) {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-      body: task
-    };
-    return this.httpClient.patch(this.urlTask + '/' + task.id,  httpOptions);
+    return this.httpClient.patch(this.urlTask + '/' + task.id,  task);
   }
 
   getTaskById(id: number){
@@ -89,5 +89,12 @@ export class ProjectHttpService {
 
   removeCommentById(id: number){
     return this.httpClient.delete(this.urlComment + 'id');
+  }
+
+  setContributorsById(projectId: number, contributors: string){
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'text/uri-list' }),
+    };
+    return this.httpClient.put(this.url + '/' + projectId + '/contributors', contributors, httpOptions);
   }
 }

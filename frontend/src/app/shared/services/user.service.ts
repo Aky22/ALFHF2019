@@ -23,9 +23,14 @@ export class UserService {
       localStorage.setItem('jwt', response.token);
       this.userHttpService.getUser().subscribe(
         (user) => {
-          this.user = user;
-          this.router.navigate(['project-manager/list']);
+          this.user = {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            role: user.role
+          };
           this.userChange.emit(this.user);
+          this.router.navigate(['project-manager/list']);
         }, (error) => {
           console.log(error);
         }
@@ -57,13 +62,23 @@ export class UserService {
   getUser() {
     if (this.user === undefined) {
       this.userHttpService.getUser().pipe(map( (response) => {
-        this.user = response;
+        this.user = {
+          id: response.id,
+          email: response.email,
+          username: response.username,
+          role: response.role
+        };
         this.userChange.emit(this.user);
         return this.user;
       }, (error) => {
         this.logout();
       }));
+    } else {
+      return this.user;
     }
-    return this.user;
+  }
+
+  getUserHttp(){
+    return this.userHttpService.getUser();
   }
 }

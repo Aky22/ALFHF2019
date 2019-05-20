@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {LoginInterface, UserInterface} from '../../model/interfaces/user.interface';
+import {LoginInterface, UserInterface, UserMeROInterface, UserROInterface} from '../../model/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +15,11 @@ export class UserHttpService {
   }
 
   register(data: UserInterface) {
-    return this.httpClient.post<UserInterface>(this.url + 'auth/signup', {username: data.username, password: data.password, email: data.email});
+    return this.httpClient.post<UserROInterface>(this.url + 'auth/signup', {username: data.username, password: data.password, email: data.email});
   }
 
   getUser() {
-    return this.httpClient.get<UserInterface>(this.url + 'users/me');
+    return this.httpClient.get<UserMeROInterface>(this.url + 'users/me');
   }
 
 }
