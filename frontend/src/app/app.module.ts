@@ -33,6 +33,8 @@ import {UserHttpService} from './shared/services/http/user-http.service';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpHandler} from '@angular/common/http';
 import {AuthInterceptor} from './shared/services/http/auth-interceptor';
 import {AuthGuardService} from './shared/services/auth-guard.service';
+import {AppHttpInterceptor} from './shared/services/http/http-interceptor';
+import {ToastrModule} from 'ngx-toastr';
 
 
 const appRouts: Routes = [
@@ -86,11 +88,16 @@ const appRouts: Routes = [
     MenubarModule,
     InputTextModule,
     ScrollPanelModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastrModule.forRoot()
   ],
   providers: [UserHttpService, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
+    multi: true
+  }, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AppHttpInterceptor,
     multi: true
   }],
   bootstrap: [AppComponent]

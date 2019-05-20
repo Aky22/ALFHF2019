@@ -91,7 +91,7 @@ export class ProjectListComponent implements OnInit {
   refreshProjects() {
     if (this.user.role !== undefined){
       console.log('kurvaanyad');
-      if (this.user.role === Role.Admin) {
+      if (true) {
         console.log('kurvaanyad2');
         this.projectHttpService.getAllProject().subscribe(
           (response) => {
