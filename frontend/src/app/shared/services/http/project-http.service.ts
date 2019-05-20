@@ -36,7 +36,7 @@ export class ProjectHttpService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       body: project
     };
-    return this.httpClient.put(this.url + '/' + project.id,  httpOptions);
+    return this.httpClient.put(this.url + '/' + project.id,  project);
   }
 
   getTask(href: string){
@@ -56,7 +56,7 @@ export class ProjectHttpService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       body: task
     };
-    return this.httpClient.patch(this.urlTask + '/' + task.id,  httpOptions);
+    return this.httpClient.patch(this.urlTask + '/' + task.id,  task);
   }
 
   getTaskById(id: number){

@@ -105,6 +105,7 @@ export class TaskDetailsComponent implements OnInit {
   refreshComments(){
     this.projectHttpService.getComments(this.task.comments).subscribe(
       (response) => {
+        console.log(response);
         this.comments = [];
         for (const c of response._embedded.comments){
           this.comments.push(this.projectService.commentROtoComment(c));

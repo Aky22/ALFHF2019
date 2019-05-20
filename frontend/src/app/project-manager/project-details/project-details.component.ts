@@ -53,13 +53,23 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   onSave(){
-    this.projectHttpService.saveProject(this.project).subscribe(
-      (response) => {
-        console.log(response);
-        this.router.navigate(['/project-manager/list']);
+    if (this.project.id !== undefined){
+      this.projectHttpService.saveProject(this.project).subscribe(
+        (response) => {
+          console.log(response);
+          this.router.navigate(['/project-manager/list']);
 
-      }
-    );
+        }
+      );
+    } else {
+      this.projectHttpService.updateProject(this.project).subscribe(
+        (response) => {
+          console.log('update');
+          console.log(response);
+        }
+      );
+    }
+
   }
 
 
@@ -89,7 +99,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   onTaskSave(task: TaskInterface){
     task.assignee = 'http://localhost:8080/users/' + task.assignee;
-    task.project = 'http://localhost:8080/project/' + task.project;
+    task.project = 'http://localhost:8080/projects/' + task.project;
     const taskTemp: TaskInterface = {
       id: task.id,
       deadline: task.deadline,
@@ -98,6 +108,7 @@ export class ProjectDetailsComponent implements OnInit {
       project: task.project,
       assignee: task.assignee
     };
+    console.log(taskTemp);
     if (task.id !== undefined) {
       console.log(taskTemp);
       this.projectHttpService.updateTask(taskTemp).subscribe(
