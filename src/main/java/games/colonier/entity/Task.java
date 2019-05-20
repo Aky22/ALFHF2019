@@ -16,7 +16,7 @@ public class Task {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Project project;

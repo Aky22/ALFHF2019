@@ -29,8 +29,8 @@ public class UserEventHandler {
     public void handleUserUpdate(User user) {
         if (user.getPassword() == null || user.getPassword().equals("")) {
             //keeps the last password
-            User storedUser = userRepository.findById(user.getId()).get();
-            user.setPassword(storedUser.getPassword());
+         //   User storedUser = userRepository.findById(user.getId()).get();
+         //   user.setPassword(storedUser.getPassword());
         }
         else {
             //password change request
