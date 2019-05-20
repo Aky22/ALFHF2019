@@ -31,12 +31,12 @@ export class ProjectHttpService {
     return this.httpClient.delete(this.url + '/' + id);
   }
 
-  updateProject(project: ProjectInterface) {
+  updateProject(project: ProjectInterface | SimpleProjectInterface) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       body: project
     };
-    return this.httpClient.put(this.url + '/' + project.id,  project);
+    return this.httpClient.patch(this.url + '/' + project.id,  project);
   }
 
   getTask(href: string){
@@ -52,10 +52,6 @@ export class ProjectHttpService {
   }
 
   updateTask(task: TaskInterface) {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-      body: task
-    };
     return this.httpClient.patch(this.urlTask + '/' + task.id,  task);
   }
 
@@ -89,5 +85,12 @@ export class ProjectHttpService {
 
   removeCommentById(id: number){
     return this.httpClient.delete(this.urlComment + 'id');
+  }
+
+  setContributorsById(projectId: number, contributors: string){
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'text/uri-list' }),
+    };
+    return this.httpClient.put(this.url + '/' + projectId + '/contributors', contributors, httpOptions);
   }
 }

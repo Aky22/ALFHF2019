@@ -1,4 +1,4 @@
-<div *ngIf="project !== undefined && tasks !== undefined && contributors !== undefined && mode !== undefined">
+<div *ngIf="project !== undefined && tasks !== undefined && contributors !== undefined && mode !== undefined && users !== undefined">
   <div class="ui-g">
     <div class="ui-g-6">
       <h4>Project</h4>
@@ -23,6 +23,7 @@
       </div>
       <div class="ui-fluid ui-g-12">
         <p-listbox
+          *ngIf="users.length > 0"
           [disabled]="!isEditable()"
           [options]="users"
           [(ngModel)] = "contributors"

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ProjectInterface} from '../../shared/model/interfaces/project.interface';
+import {ProjectInterface, SimpleProjectInterface} from '../../shared/model/interfaces/project.interface';
 import {SimpleUserInterface, UserInterface} from '../../shared/model/interfaces/user.interface';
 import {TaskInterface} from '../../shared/model/interfaces/task.interface';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -16,7 +16,7 @@ import {UsersService} from '../../shared/services/users.service';
 export class ProjectDetailsComponent implements OnInit {
   mode: string;
   projectId: number;
-  users = [];
+  users: SimpleUserInterface[] = [];
   project: ProjectInterface;
   contributors: SimpleUserInterface[] = [];
   tasks: TaskInterface[] = [];
@@ -38,8 +38,6 @@ export class ProjectDetailsComponent implements OnInit {
 
     this.usersHttpService.getUsers().subscribe(
       (response) => {
-        console.log('users: ');
-        console.log(response);
         for (let u of response._embedded.users) {
           this.users.push(this.usersService.userROtoSimpleUser(u));
         }
@@ -53,22 +51,28 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   onSave(){
-    if (this.project.id !== undefined){
-      this.projectHttpService.saveProject(this.project).subscribe(
-        (response) => {
-          console.log(response);
-          this.router.navigate(['/project-manager/list']);
+    console.log(this.project);
+    console.log(this.contributors);
+    let conts = '';
+    for (const c of this.contributors){
+      conts = conts + 'https://localhost:8080/users/' + c.id + '\n';
+    }
+    console.log(conts);
+    const tempProject: SimpleProjectInterface = {
+      name: this.project.name, deadline: this.project.deadline, description: this.project.description, id: this.project.id
+    };
 
-        }
-      );
-    } else {
-      this.projectHttpService.updateProject(this.project).subscribe(
+    this.projectHttpService.updateProject(tempProject).subscribe(
         (response) => {
+          this.projectHttpService.setContributorsById(this.projectId, conts).subscribe(
+            (response1) => {
+              console.log(response1);
+            }
+          );
           console.log('update');
           console.log(response);
         }
       );
-    }
 
   }
 
@@ -163,8 +167,10 @@ export class ProjectDetailsComponent implements OnInit {
           this.project.tasks = {href: ''};
         }
         if (this.project.contributors.href !== undefined ){
+          console.log(this.project.contributors.href);
           this.usersHttpService.getUsersByHref(this.project.contributors.href).subscribe(
             (cont) => {
+              console.log(cont);
               for (const c of cont._embedded.users){
                 this.contributors.push(this.usersService.userROtoSimpleUser(c));
               }
