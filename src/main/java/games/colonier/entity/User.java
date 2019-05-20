@@ -27,7 +27,10 @@ public class User {
 
     private Roles role;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "project_contributors",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "contributors_id"))
     private Set<Project> projects;
 
     public long getId() {
