@@ -37,5 +37,13 @@ export interface UserROInterface {
     self: {href: string};
   };
 }
+  export interface UserMeROInterface {
+    id: number;
+    email: string;
+    username: string;
+    role: Role;
+    projects: any [];
+}
+
 
 

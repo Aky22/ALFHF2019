@@ -23,6 +23,10 @@ export class ProjectHttpService {
     return this.httpClient.get<ProjectROInterface>(this.url + '/' + id);
   }
 
+  getProjects(href: string){
+    return this.httpClient.get<ProjectsROInterface>(href);
+  }
+
   saveProject(data: SimpleProjectInterface) {
     return this.httpClient.post<ProjectROInterface>(this.url, {name: data.name, description: data.description, deadline: data.deadline});
   }

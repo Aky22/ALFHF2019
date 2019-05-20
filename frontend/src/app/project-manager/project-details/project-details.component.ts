@@ -134,13 +134,7 @@ export class ProjectDetailsComponent implements OnInit {
   onTaskDelete(task: TaskInterface){
     this.projectHttpService.removeTaskById(task.id).subscribe(
       (response) => {
-        this.projectHttpService.removeTaskById(task.id).subscribe(
-          (rem) => {
-            console.log('Delete Task: ');
-            console.log(rem);
-            this.refreshProject();
-          }
-        );
+        this.refreshProject();
       }
     );
     this.refreshProject();

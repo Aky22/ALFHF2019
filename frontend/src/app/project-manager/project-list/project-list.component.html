@@ -1,12 +1,12 @@
-<div>
+<div *ngIf="user !== undefined && projects !== undefined">
   <p-table [columns]="cols" [value]="projects">
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of columns">
           {{col.header}}
         </th>
-        <th style="width:11em">
-          <button pButton type="button" label="New project" (click)="onNewProject()"></button>
+        <th style="width:11em" >
+          <button *ngIf="user.role === 'ADMIN'" pButton type="button" label="New project" (click)="onNewProject()"></button>
         </th>
       </tr>
     </ng-template>
@@ -20,11 +20,16 @@
         </td>
         <td>
           <p-splitButton
+            *ngIf="user.role === 'ADMIN'"
             label="Details"
             icon="pi pi-file"
             (onClick)="onSelectView(rowData)"
             [model]="getItems(rowData)">
           </p-splitButton>
+          <p-button
+            *ngIf="user.role === 'BASIC'"
+            label="Details" icon="pi pi-file" (onClick)="onSelectView(rowData)">
+          </p-button>
         </td>
       </tr>
     </ng-template>
