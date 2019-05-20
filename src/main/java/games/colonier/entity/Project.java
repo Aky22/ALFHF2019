@@ -18,7 +18,10 @@ public class Project {
 
     private Date deadline;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "project_contributors",
+            joinColumns = @JoinColumn(name = "contributors_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id"))
     private Set<User> contributors;
 
     @OneToMany(mappedBy = "project")
