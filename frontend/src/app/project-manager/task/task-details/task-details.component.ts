@@ -37,7 +37,8 @@ export class TaskDetailsComponent implements OnInit {
               private fb: FormBuilder) { }
 
   ngOnInit() {
-    if (this.taskId === undefined) {
+    if (this.mode === Mode.Create) {
+      this.assignee = this.userService.getUser();
       this.task = {
         name: '',
         description: '',
@@ -45,10 +46,12 @@ export class TaskDetailsComponent implements OnInit {
         assignee: '',
         project: ''
       };
+      this.refreshTaskForm();
     } else {
       this.projectHttpService.getTaskById(this.taskId).subscribe(
         (response) => {
           this.task = this.projectService.taskROtoTask(response);
+          this.refreshAssignee();
           this.refreshComments();
         }
       );
@@ -60,28 +63,6 @@ export class TaskDetailsComponent implements OnInit {
         }
       }
     );
-    if (this.mode === Mode.Create){
-      this.assignee = this.userService.getUser();
-    } else {
-      this.usersHttpService.getUser(this.task.assignee).subscribe(
-        (response) => {
-          this.assignee = this.usersService.userROtoUser(response);
-        }
-      );
-    }
-    if (this.mode === undefined) {
-      this.mode = Mode.Details;
-    }
-
-    // TODO comments
-
-
-    this.taskForm = this.fb.group({
-      'name': new FormControl({value: this.task.name, disabled: this.mode === Mode.Details}, Validators.required),
-      'deadline': new FormControl({value: this.task.deadline, disabled: this.mode === Mode.Details}, Validators.required),
-      'assignee': new FormControl({value: this.assignee, disabled: this.mode === Mode.Details}, Validators.required),
-      'description': new FormControl({value: this.task.description, disabled: this.mode === Mode.Details})
-    });
   }
 
   onSubmit() {
@@ -130,6 +111,27 @@ export class TaskDetailsComponent implements OnInit {
         }
       }
     );
+  }
+
+  refreshAssignee() {
+    this.usersHttpService.getUser(this.task.assignee).subscribe(
+      (response) => {
+        console.log('user:');
+        console.log(response);
+        this.assignee = this.usersService.userROtoUser(response);
+        this.refreshTaskForm();
+        console.log(this.assignee);
+      }
+    );
+  }
+
+  refreshTaskForm(){
+    this.taskForm = this.fb.group({
+      'name': new FormControl({value: this.task.name, disabled: this.mode === Mode.Details}, Validators.required),
+      'deadline': new FormControl({value: this.task.deadline, disabled: this.mode === Mode.Details}, Validators.required),
+      'assignee': new FormControl({value: this.assignee, disabled: this.mode === Mode.Details}, Validators.required),
+      'description': new FormControl({value: this.task.description, disabled: this.mode === Mode.Details})
+    });
   }
 
 }

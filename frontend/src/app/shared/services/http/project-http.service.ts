@@ -51,6 +51,14 @@ export class ProjectHttpService {
     return this.httpClient.post(this.urlTask, task);
   }
 
+  updateTask(task: TaskInterface) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      body: task
+    };
+    return this.httpClient.patch(this.urlTask + '/' + task.id,  httpOptions);
+  }
+
   getTaskById(id: number){
     return this.httpClient.get<TaskROInterface>('http://localhost:8080/tasks/' + id);
   }

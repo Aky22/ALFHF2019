@@ -3,8 +3,8 @@ export interface TaskInterface{
   name: string;
   description: string;
   deadline: Date;
-  assignee: string;
-  project: string;
+  assignee?: string;
+  project?: string;
   comments?: string;
 }
 

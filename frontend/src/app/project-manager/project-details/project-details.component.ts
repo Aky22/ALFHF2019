@@ -6,7 +6,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ProjectHttpService} from '../../shared/services/http/project-http.service';
 import {UsersHttpService} from '../../shared/services/http/users-http.service';
 import {ProjectService} from '../../shared/services/project.service';
-import {UserService} from '../../shared/services/user.service';
 import {UsersService} from '../../shared/services/users.service';
 
 @Component({
@@ -84,30 +83,52 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   onTaskCancel(){
+    this.selectedTask = undefined;
     this.display = {details: false, edit: false, new: false};
   }
 
   onTaskSave(task: TaskInterface){
     task.assignee = 'http://localhost:8080/users/' + task.assignee;
     task.project = 'http://localhost:8080/project/' + task.project;
-    this.projectHttpService.saveTask(task).subscribe(
-      (response) => {
-        console.log(response);
-        this.refreshProject();
-      }
-    );
-    this.display = {details: false, edit: false, new: false};
+    const taskTemp: TaskInterface = {
+      id: task.id,
+      deadline: task.deadline,
+      name: task.name,
+      description: task.description,
+      project: task.project,
+      assignee: task.assignee
+    };
+    if (task.id !== undefined) {
+      console.log(taskTemp);
+      this.projectHttpService.updateTask(taskTemp).subscribe(
+        (response) => {
+          this.display = {details: false, edit: false, new: false};
+          this.refreshProject();
+        }
+      );
+    } else {
+      this.projectHttpService.saveTask(taskTemp).subscribe(
+        (response) => {
+          this.display = {details: false, edit: false, new: false};
+          this.refreshProject();
+        }
+      );
+    }
   }
 
   onTaskDelete(task: TaskInterface){
     this.projectHttpService.removeTaskById(task.id).subscribe(
       (response) => {
-        console.log(response);
+        this.projectHttpService.removeTaskById(task.id).subscribe(
+          (rem) => {
+            console.log('Delete Task: ');
+            console.log(rem);
+            this.refreshProject();
+          }
+        );
       }
     );
     this.refreshProject();
-    console.log('Delete');
-    console.log(task);
   }
 
   isEditable(){
@@ -117,16 +138,14 @@ export class ProjectDetailsComponent implements OnInit {
   refreshProject(){
     this.projectHttpService.getProjectById(this.projectId).subscribe(
       (response) => {
+        this.tasks = [];
         this.project = this.projectService.projectROtoProject(response);
-        console.log(response);
-        console.log(this.project);
         if (this.project.tasks !== undefined) {
           this.projectHttpService.getTasks(this.project.tasks.href).subscribe(
             (tasks) => {
               for (let t of tasks._embedded.tasks) {
                 this.tasks.push(this.projectService.taskROtoTask(t));
               }
-              console.log(this.tasks);
             }
           );
         } else {
@@ -140,7 +159,6 @@ export class ProjectDetailsComponent implements OnInit {
               }
             }
           );
-          console.log(this.tasks);
         }
       }, (error) => {
         console.log(error);
